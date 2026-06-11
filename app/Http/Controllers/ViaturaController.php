@@ -10,8 +10,8 @@ class ViaturaController extends Controller
 {
     public function index()
     {
-        $viaturas = Viatura::all();
-        return view('viaturas.index', compact('viaturas'));
+        $viaturas = Viatura::orderBy('id', 'desc')->paginate(10);
+    return view('viaturas.index', compact('viaturas'));
     }
 
     public function create()

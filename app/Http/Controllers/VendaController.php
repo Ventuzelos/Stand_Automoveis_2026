@@ -11,7 +11,7 @@ class VendaController extends Controller
 {
     public function index()
     {
-        $vendas = Venda::with(['cliente', 'viatura'])->get();
+        $vendas = Venda::with(['cliente', 'viatura'])->orderBy('id', 'desc')->paginate(10);
         return view('vendas.index', compact('vendas'));
     }
 
