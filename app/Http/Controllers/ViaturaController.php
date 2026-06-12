@@ -8,10 +8,36 @@ use Illuminate\Support\Facades\Storage;
 
 class ViaturaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $viaturas = Viatura::orderBy('id', 'desc')->paginate(10);
-    return view('viaturas.index', compact('viaturas'));
+        $search = $request->input('search');
+        $sort = $request->input('sort', 'id');
+        $direction = $request->input('direction', 'desc');
+
+        $allowedSorts = ['id', 'marca', 'modelo', 'ano', 'preco'];
+        $allowedDirections = ['asc', 'desc'];
+
+        if (!in_array($sort, $allowedSorts)) {
+            $sort = 'id';
+        }
+
+        if (!in_array($direction, $allowedDirections)) {
+            $direction = 'desc';
+        }
+
+        $viaturas = Viatura::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('marca', 'like', "%{$search}%")
+                        ->orWhere('modelo', 'like', "%{$search}%")
+                        ->orWhere('matricula', 'like', "%{$search}%");
+                });
+            })
+            ->orderBy($sort, $direction)
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('viaturas.index', compact('viaturas', 'search', 'sort', 'direction'));
     }
 
     public function create()
@@ -31,15 +57,10 @@ class ViaturaController extends Controller
             'combustivel' => 'required|string|max:50',
             'quilometragem' => 'required|integer|min:0',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'vendido' => 'required|in:0,1',
         ]);
 
-        $caminhoImagem = null;
-
-        if ($request->hasFile('imagem')) {
-            $caminhoImagem = $request->file('imagem')->store('viaturas', 'public');
-        }
-
-        Viatura::create([
+        $dados = [
             'marca' => $request->marca,
             'modelo' => $request->modelo,
             'matricula' => $request->matricula,
@@ -48,16 +69,21 @@ class ViaturaController extends Controller
             'preco' => $request->preco,
             'combustivel' => $request->combustivel,
             'quilometragem' => $request->quilometragem,
-            'imagem' => $caminhoImagem,
-            'vendido' => $request->has('vendido'),
-        ]);
+            'vendido' => $request->vendido,
+        ];
+
+        if ($request->hasFile('imagem')) {
+            $dados['imagem'] = $request->file('imagem')->store('viaturas', 'public');
+        }
+
+        Viatura::create($dados);
 
         return redirect()->route('viaturas.index')->with('success', 'Viatura criada com sucesso!');
     }
 
     public function show(Viatura $viatura)
     {
-        //
+        return view('viaturas.show', compact('viatura'));
     }
 
     public function edit(Viatura $viatura)
@@ -77,6 +103,7 @@ class ViaturaController extends Controller
             'combustivel' => 'required|string|max:50',
             'quilometragem' => 'required|integer|min:0',
             'imagem' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'vendido' => 'required|in:0,1',
         ]);
 
         $dados = [
@@ -88,7 +115,7 @@ class ViaturaController extends Controller
             'preco' => $request->preco,
             'combustivel' => $request->combustivel,
             'quilometragem' => $request->quilometragem,
-            'vendido' => $request->has('vendido'),
+            'vendido' => $request->vendido,
         ];
 
         if ($request->hasFile('imagem')) {

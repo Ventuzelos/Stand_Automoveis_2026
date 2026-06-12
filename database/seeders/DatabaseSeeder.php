@@ -2,24 +2,28 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Cliente;
+use App\Models\Viatura;
+use App\Models\Venda;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Cliente::factory(25)->create();
+        Viatura::factory(32)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $clientes = Cliente::all();
+        $viaturasVendidas = Viatura::where('vendido', true)->take(4)->get();
+
+        foreach ($viaturasVendidas as $viatura) {
+            Venda::create([
+                'cliente_id' => $clientes->random()->id,
+                'viatura_id' => $viatura->id,
+                'data_venda' => now()->subDays(rand(1, 60)),
+                'preco_venda' => $viatura->preco,
+            ]);
+        }
     }
 }

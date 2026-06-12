@@ -11,6 +11,7 @@ class Venda extends Model
         'viatura_id',
         'data_venda',
         'preco_venda',
+        'observacoes',
     ];
 
     public function cliente()

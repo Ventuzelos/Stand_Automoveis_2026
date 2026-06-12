@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Viatura extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'marca',
         'modelo',
@@ -18,9 +21,4 @@ class Viatura extends Model
         'imagem',
         'vendido',
     ];
-
-    public function venda()
-    {
-        return $this->hasOne(Venda::class);
-    }
 }

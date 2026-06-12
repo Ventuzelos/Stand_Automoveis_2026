@@ -7,10 +7,23 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $clientes = Cliente::orderBy('id', 'desc')->paginate(10);
-        return view('clientes.index', compact('clientes'));
+        $search = $request->input('search');
+
+        $clientes = Cliente::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('nome', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('telefone', 'like', "%{$search}%");
+                });
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('clientes.index', compact('clientes', 'search'));
     }
 
     public function create()
@@ -26,7 +39,7 @@ class ClienteController extends Controller
             'email' => 'required|email|unique:clientes,email',
             'telefone' => 'required|string|max:20',
             'nif' => 'required|string|max:20|unique:clientes,nif',
-            'morada' => 'required|string|max:255',
+            'morada' => 'required|string|max:155',
         ]);
 
         Cliente::create([
@@ -42,7 +55,7 @@ class ClienteController extends Controller
 
     public function show(Cliente $cliente)
     {
-        //
+        return view('clientes.show', compact('cliente'));
     }
 
     public function edit(Cliente $cliente)

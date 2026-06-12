@@ -9,10 +9,25 @@ use Illuminate\Http\Request;
 
 class VendaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $vendas = Venda::with(['cliente', 'viatura'])->orderBy('id', 'desc')->paginate(10);
-        return view('vendas.index', compact('vendas'));
+        $search = $request->input('search');
+
+        $vendas = Venda::with(['cliente', 'viatura'])
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->whereHas('cliente', function ($clienteQuery) use ($search) {
+                        $clienteQuery->where('nome', 'like', "%{$search}%");
+                    })->orWhereHas('viatura', function ($viaturaQuery) use ($search) {
+                        $viaturaQuery->where('matricula', 'like', "%{$search}%");
+                    });
+                });
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('vendas.index', compact('vendas', 'search'));
     }
 
     public function create()
@@ -57,7 +72,7 @@ class VendaController extends Controller
 
     public function show(Venda $venda)
     {
-        //
+        return view('vendas.show', compact('venda'));
     }
 
     public function edit(Venda $venda)
@@ -81,6 +96,7 @@ class VendaController extends Controller
             'viatura_id' => 'required|exists:viaturas,id',
             'data_venda' => 'required|date',
             'preco_venda' => 'required|numeric|min:0',
+            'observacoes' => 'nullable|string',
         ]);
 
         $viaturaAntiga = Viatura::findOrFail($venda->viatura_id);
@@ -102,6 +118,7 @@ class VendaController extends Controller
             'viatura_id' => $request->viatura_id,
             'data_venda' => $request->data_venda,
             'preco_venda' => $request->preco_venda,
+            'observacoes' => $request->observacoes,
         ]);
 
         return redirect()->route('vendas.index')->with('success', 'Venda atualizada com sucesso!');
