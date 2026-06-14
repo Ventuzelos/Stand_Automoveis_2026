@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+
 use App\Models\Cliente;
 use App\Models\Viatura;
 use App\Models\Venda;
@@ -25,5 +26,10 @@ class DatabaseSeeder extends Seeder
                 'preco_venda' => $viatura->preco,
             ]);
         }
+
+        $this->call([
+            UserRoleSeeder::class,
+        ]);
     }
 }
+

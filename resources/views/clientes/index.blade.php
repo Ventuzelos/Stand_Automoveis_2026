@@ -2,9 +2,12 @@
     <x-slot name="header">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
             <h2 class="fs-4 fw-bold mb-0">Lista de Clientes</h2>
-            <a href="{{ route('clientes.create') }}" class="btn btn-primary">
-                Novo Cliente
-            </a>
+
+            @can('criar-clientes')
+                <a href="{{ route('clientes.create') }}" class="btn btn-primary">
+                    Novo Cliente
+                </a>
+            @endcan
         </div>
     </x-slot>
 
@@ -86,20 +89,24 @@
                                                     Ver
                                                 </a>
 
-                                                <a href="{{ route('clientes.edit', $cliente->id) }}"
-                                                    class="btn btn-action-edit btn-sm">
-                                                    Editar
-                                                </a>
+                                                @can('editar-clientes')
+                                                    <a href="{{ route('clientes.edit', $cliente->id) }}"
+                                                        class="btn btn-action-edit btn-sm">
+                                                        Editar
+                                                    </a>
+                                                @endcan
 
-                                                <form action="{{ route('clientes.destroy', $cliente->id) }}"
-                                                    method="POST" class="d-inline m-0">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-action-delete btn-sm"
-                                                        onclick="return confirm('Tens a certeza que queres eliminar este cliente?')">
-                                                        Eliminar
-                                                    </button>
-                                                </form>
+                                                @can('eliminar-clientes')
+                                                    <form action="{{ route('clientes.destroy', $cliente->id) }}"
+                                                        method="POST" class="d-inline m-0">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-action-delete btn-sm"
+                                                            onclick="return confirm('Tens a certeza que queres eliminar este cliente?')">
+                                                            Eliminar
+                                                        </button>
+                                                    </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

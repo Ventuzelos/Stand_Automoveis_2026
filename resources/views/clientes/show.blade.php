@@ -60,9 +60,23 @@
                             <a href="{{ route('clientes.index') }}" class="btn btn-outline-secondary">
                                 Voltar à Lista
                             </a>
-                            <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-primary">
-                                Editar Cliente
-                            </a>
+
+                            @can('editar-clientes')
+                                <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-primary">
+                                    Editar Cliente
+                                </a>
+                            @endcan
+
+                            @can('eliminar-clientes')
+                                <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Tens a certeza que queres eliminar este cliente?')">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            @endcan
                         </div>
                     </div>
                 </div>

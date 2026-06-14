@@ -6,11 +6,14 @@ use App\Models\Venda;
 use App\Models\Cliente;
 use App\Models\Viatura;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class VendaController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('ver-vendas');
+
         $search = $request->input('search');
 
         $vendas = Venda::with(['cliente', 'viatura'])
@@ -32,6 +35,8 @@ class VendaController extends Controller
 
     public function create()
     {
+        Gate::authorize('criar-vendas');
+
         $clientes = Cliente::orderBy('nome')->get();
         $viaturas = Viatura::where('vendido', false)->orderBy('marca')->get();
 
@@ -40,7 +45,8 @@ class VendaController extends Controller
 
     public function store(Request $request)
     {
-        //
+        Gate::authorize('criar-vendas');
+
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'viatura_id' => 'required|exists:viaturas,id',
@@ -72,12 +78,15 @@ class VendaController extends Controller
 
     public function show(Venda $venda)
     {
+        Gate::authorize('ver-vendas');
+
         return view('vendas.show', compact('venda'));
     }
 
     public function edit(Venda $venda)
     {
-        //
+        Gate::authorize('editar-vendas');
+
         $clientes = Cliente::orderBy('nome')->get();
 
         $viaturas = Viatura::where('vendido', false)
@@ -90,7 +99,8 @@ class VendaController extends Controller
 
     public function update(Request $request, Venda $venda)
     {
-        //
+        Gate::authorize('editar-vendas');
+
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
             'viatura_id' => 'required|exists:viaturas,id',
@@ -126,7 +136,8 @@ class VendaController extends Controller
 
     public function destroy(Venda $venda)
     {
-        //
+        Gate::authorize('eliminar-vendas');
+
         $viatura = Viatura::findOrFail($venda->viatura_id);
 
         $venda->delete();

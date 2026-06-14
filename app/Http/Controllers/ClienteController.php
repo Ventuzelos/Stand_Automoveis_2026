@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ClienteController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('ver-clientes');
+
         $search = $request->input('search');
 
         $clientes = Cliente::query()
@@ -28,12 +31,15 @@ class ClienteController extends Controller
 
     public function create()
     {
+        Gate::authorize('criar-clientes');
+
         return view('clientes.create');
     }
 
     public function store(Request $request)
     {
-        //
+        Gate::authorize('criar-clientes');
+
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:clientes,email',
@@ -55,18 +61,22 @@ class ClienteController extends Controller
 
     public function show(Cliente $cliente)
     {
+        Gate::authorize('ver-clientes');
+
         return view('clientes.show', compact('cliente'));
     }
 
     public function edit(Cliente $cliente)
     {
-        //
+        Gate::authorize('editar-clientes');
+
         return view('clientes.edit', compact('cliente'));
     }
 
     public function update(Request $request, Cliente $cliente)
     {
-        //
+        Gate::authorize('editar-clientes');
+
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:clientes,email,' . $cliente->id,
@@ -88,7 +98,8 @@ class ClienteController extends Controller
 
     public function destroy(Cliente $cliente)
     {
-        //
+        Gate::authorize('eliminar-clientes');
+
         $cliente->delete();
 
         return redirect()->route('clientes.index')->with('success', 'Cliente eliminado com sucesso!');

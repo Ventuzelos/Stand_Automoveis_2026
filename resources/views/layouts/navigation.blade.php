@@ -28,6 +28,13 @@
                    class="app-nav-link {{ request()->routeIs('vendas.*') ? 'active' : '' }}">
                     Vendas
                 </a>
+
+                @can('gerir-utilizadores')
+                    <a href="{{ route('utilizadores.index') }}"
+                       class="app-nav-link {{ request()->routeIs('utilizadores.*') ? 'active' : '' }}">
+                        Utilizadores
+                    </a>
+                @endcan
             </div>
 
             <div class="app-navbar-user desktop-only">
@@ -75,6 +82,13 @@
                    class="app-nav-link {{ request()->routeIs('vendas.*') ? 'active' : '' }}">
                     Vendas
                 </a>
+
+                @can('gerir-utilizadores')
+                    <a href="{{ route('utilizadores.index') }}"
+                       class="app-nav-link {{ request()->routeIs('utilizadores.*') ? 'active' : '' }}">
+                        Utilizadores
+                    </a>
+                @endcan
             </div>
 
             <div class="app-mobile-user">

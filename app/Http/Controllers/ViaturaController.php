@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Viatura;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class ViaturaController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('ver-viaturas');
+
         $search = $request->input('search');
         $sort = $request->input('sort', 'id');
         $direction = $request->input('direction', 'desc');
@@ -42,11 +45,15 @@ class ViaturaController extends Controller
 
     public function create()
     {
+        Gate::authorize('criar-viaturas');
+
         return view('viaturas.create');
     }
 
     public function store(Request $request)
     {
+        Gate::authorize('criar-viaturas');
+
         $request->validate([
             'marca' => 'required|string|max:100',
             'modelo' => 'required|string|max:100',
@@ -83,16 +90,22 @@ class ViaturaController extends Controller
 
     public function show(Viatura $viatura)
     {
+        Gate::authorize('ver-viaturas');
+
         return view('viaturas.show', compact('viatura'));
     }
 
     public function edit(Viatura $viatura)
     {
+        Gate::authorize('editar-viaturas');
+
         return view('viaturas.edit', compact('viatura'));
     }
 
     public function update(Request $request, Viatura $viatura)
     {
+        Gate::authorize('editar-viaturas');
+
         $request->validate([
             'marca' => 'required|string|max:100',
             'modelo' => 'required|string|max:100',
@@ -133,6 +146,8 @@ class ViaturaController extends Controller
 
     public function destroy(Viatura $viatura)
     {
+        Gate::authorize('eliminar-viaturas');
+
         if ($viatura->imagem) {
             Storage::disk('public')->delete($viatura->imagem);
         }

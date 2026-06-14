@@ -164,7 +164,7 @@
                                     <div class="col-12">
                                         <label class="form-label d-block">Imagem Atual</label>
                                         <img
-                                            src="{{ asset('storage/' . $viatura->imagem) }}"
+                                            src="{{ asset($viatura->imagem) }}"
                                             alt="Imagem atual da viatura"
                                             class="img-thumbnail"
                                             width="100%" height="100%"

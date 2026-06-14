@@ -2,9 +2,12 @@
     <x-slot name="header">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
             <h2 class="fs-4 fw-bold mb-0">Lista de Viaturas</h2>
-            <a href="{{ route('viaturas.create') }}" class="btn btn-primary">
-                Nova Viatura
-            </a>
+
+            @can('criar-viaturas')
+                <a href="{{ route('viaturas.create') }}" class="btn btn-primary">
+                    Nova Viatura
+                </a>
+            @endcan
         </div>
     </x-slot>
 
@@ -38,8 +41,7 @@
                             <select name="sort" class="search-unified-select">
                                 <option value="id" {{ request('sort', 'id') == 'id' ? 'selected' : '' }}>ID</option>
                                 <option value="marca" {{ request('sort') == 'marca' ? 'selected' : '' }}>Marca</option>
-                                <option value="modelo" {{ request('sort') == 'modelo' ? 'selected' : '' }}>Modelo
-                                </option>
+                                <option value="modelo" {{ request('sort') == 'modelo' ? 'selected' : '' }}>Modelo</option>
                                 <option value="ano" {{ request('sort') == 'ano' ? 'selected' : '' }}>Ano</option>
                                 <option value="preco" {{ request('sort') == 'preco' ? 'selected' : '' }}>Preço</option>
                             </select>
@@ -49,10 +51,10 @@
 
                         <div class="search-unified-group">
                             <select name="direction" class="search-unified-select">
-                                <option value="asc" {{ request('direction') == 'asc' ? 'selected' : '' }}>Ascendente
-                                </option>
+                                <option value="asc" {{ request('direction') == 'asc' ? 'selected' : '' }}>Ascendente</option>
                                 <option value="desc" {{ request('direction', 'desc') == 'desc' ? 'selected' : '' }}>
-                                    Descendente</option>
+                                    Descendente
+                                </option>
                             </select>
                         </div>
 
@@ -93,9 +95,8 @@
                                         <td>{{ $viatura->id }}</td>
                                         <td>
                                             @if ($viatura->imagem)
-                                                <img src="{{ asset('storage/' . $viatura->imagem) }}"
-                                                    alt="Imagem da viatura" width="72" height="48"
-                                                    class="img-thumbnail">
+                                                <img src="{{ asset('storage/' . $viatura->imagem) }}" alt="Imagem da viatura"
+                                                    width="72" height="48" class="img-thumbnail">
                                             @else
                                                 <span class="text-muted">Sem imagem</span>
                                             @endif
@@ -121,20 +122,25 @@
                                                     class="btn btn-action-view btn-sm">
                                                     Ver
                                                 </a>
-                                                <a href="{{ route('viaturas.edit', $viatura->id) }}"
-                                                    class="btn btn-action-edit btn-sm">
-                                                    Editar
-                                                </a>
 
-                                                <form action="{{ route('viaturas.destroy', $viatura->id) }}"
-                                                    method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-action-delete btn-sm"
-                                                        onclick="return confirm('Tens a certeza que queres eliminar esta viatura?')">
-                                                        Eliminar
-                                                    </button>
-                                                </form>
+                                                @can('editar-viaturas')
+                                                    <a href="{{ route('viaturas.edit', $viatura->id) }}"
+                                                        class="btn btn-action-edit btn-sm">
+                                                        Editar
+                                                    </a>
+                                                @endcan
+
+                                                @can('eliminar-viaturas')
+                                                    <form action="{{ route('viaturas.destroy', $viatura->id) }}"
+                                                        method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-action-delete btn-sm"
+                                                            onclick="return confirm('Tens a certeza que queres eliminar esta viatura?')">
+                                                            Eliminar
+                                                        </button>
+                                                    </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

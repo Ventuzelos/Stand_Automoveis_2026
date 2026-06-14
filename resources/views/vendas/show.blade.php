@@ -40,7 +40,7 @@
                                     <strong>
                                         {{ $venda->viatura->marca ?? '' }}
                                         {{ $venda->viatura->modelo ?? '' }}
-                                        @if($venda->viatura)
+                                        @if ($venda->viatura)
                                             ({{ $venda->viatura->matricula }})
                                         @endif
                                     </strong>
@@ -66,9 +66,23 @@
                             <a href="{{ route('vendas.index') }}" class="btn btn-outline-secondary">
                                 Voltar à Lista
                             </a>
-                            <a href="{{ route('vendas.edit', $venda->id) }}" class="btn btn-primary">
-                                Editar Venda
-                            </a>
+
+                            @can('editar-vendas')
+                                <a href="{{ route('vendas.edit', $venda->id) }}" class="btn btn-primary">
+                                    Editar Venda
+                                </a>
+                            @endcan
+
+                            @can('eliminar-vendas')
+                                <form action="{{ route('vendas.destroy', $venda->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Tens a certeza que queres eliminar esta venda?')">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            @endcan
                         </div>
                     </div>
                 </div>

@@ -12,8 +12,8 @@
                     <div class="card shadow-sm h-100">
                         <div class="card-body">
                             @if ($viatura->imagem)
-                                <img src="{{ asset('storage/' . $viatura->imagem) }}" alt="Imagem da viatura" width="100%" height="100%"
-                                    class="img-fluid rounded">
+                                <img src="{{ asset('storage/' . $viatura->imagem) }}" alt="Imagem da viatura"
+                                    class="img-fluid rounded w-100">
                             @else
                                 <div class="border rounded d-flex align-items-center justify-content-center text-muted"
                                     style="height: 320px;">
@@ -93,13 +93,27 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex justify-content-end gap-2 mt-4">
+                            <div class="d-flex justify-content-end gap-2 mt-4 flex-wrap">
                                 <a href="{{ route('viaturas.index') }}" class="btn btn-outline-secondary">
                                     Voltar à Lista
                                 </a>
-                                <a href="{{ route('viaturas.edit', $viatura->id) }}" class="btn btn-primary">
-                                    Editar Viatura
-                                </a>
+
+                                @can('editar-viaturas')
+                                    <a href="{{ route('viaturas.edit', $viatura->id) }}" class="btn btn-primary">
+                                        Editar Viatura
+                                    </a>
+                                @endcan
+
+                                @can('eliminar-viaturas')
+                                    <form action="{{ route('viaturas.destroy', $viatura->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Tens a certeza que queres eliminar esta viatura?')">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                @endcan
                             </div>
                         </div>
                     </div>

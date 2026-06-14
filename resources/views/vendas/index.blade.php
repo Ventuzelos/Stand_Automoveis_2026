@@ -2,9 +2,12 @@
     <x-slot name="header">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
             <h2 class="fs-4 fw-bold mb-0">Lista de Vendas</h2>
-            <a href="{{ route('vendas.create') }}" class="btn btn-primary">
-                Nova Venda
-            </a>
+
+            @can('criar-vendas')
+                <a href="{{ route('vendas.create') }}" class="btn btn-primary">
+                    Nova Venda
+                </a>
+            @endcan
         </div>
     </x-slot>
 
@@ -53,20 +56,25 @@
                                                     class="btn btn-action-view btn-sm">
                                                     Ver
                                                 </a>
-                                                <a href="{{ route('vendas.edit', $venda->id) }}"
-                                                    class="btn btn-action-edit btn-sm">
-                                                    Editar
-                                                </a>
 
-                                                <form action="{{ route('vendas.destroy', $venda->id) }}" method="POST"
-                                                    class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-action-delete btn-sm"
-                                                        onclick="return confirm('Tens a certeza que queres eliminar esta venda?')">
-                                                        Eliminar
-                                                    </button>
-                                                </form>
+                                                @can('editar-vendas')
+                                                    <a href="{{ route('vendas.edit', $venda->id) }}"
+                                                        class="btn btn-action-edit btn-sm">
+                                                        Editar
+                                                    </a>
+                                                @endcan
+
+                                                @can('eliminar-vendas')
+                                                    <form action="{{ route('vendas.destroy', $venda->id) }}" method="POST"
+                                                        class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-action-delete btn-sm"
+                                                            onclick="return confirm('Tens a certeza que queres eliminar esta venda?')">
+                                                            Eliminar
+                                                        </button>
+                                                    </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>
