@@ -101,6 +101,23 @@ class CatalogoController extends Controller
             abort(404);
         }
 
-        return view('public.viatura-show', compact('viatura'));
+        $relacionadas = Viatura::where('id', '!=', $viatura->id)
+            ->where('vendido', 0)
+            ->where('marca', $viatura->marca)
+            ->take(3)
+            ->get();
+
+        if ($relacionadas->count() < 3) {
+            $extra = Viatura::where('id', '!=', $viatura->id)
+                ->where('vendido', 0)
+                ->whereNotIn('id', $relacionadas->pluck('id'))
+                ->inRandomOrder()
+                ->take(3 - $relacionadas->count())
+                ->get();
+
+            $relacionadas = $relacionadas->merge($extra);
+        }
+
+        return view('public.viatura-show', compact('viatura', 'relacionadas'));
     }
 }

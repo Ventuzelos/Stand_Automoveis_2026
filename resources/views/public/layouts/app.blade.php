@@ -10,7 +10,10 @@
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     @vite(['resources/css/custom.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="preload" as="image" href="{{ asset('images/hero-car.webp') }}">
 </head>
 
 <body class="bg-light text-dark">
@@ -18,12 +21,12 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <a class="navbar-brand fw-bold" href="{{ route('home') }}">
-                <div class="d-flex gap-2 align-items-center">
-                    <img src="{{ asset('favicon.png') }}" alt="Logo" class="app-navbar-logo" width="45"
-                        height="45">
+                    <div class="d-flex gap-2 align-items-center">
+                        <img src="{{ asset('favicon.png') }}" alt="Logo" class="app-navbar-logo" width="45"
+                            height="45">
                         UrbanMotors
 
-                </div>
+                    </div>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublica"
@@ -66,21 +69,55 @@
         @yield('content')
     </main>
 
-    <footer class="bg-dark text-white py-4 mt-5">
+    <footer class="public-footer">
         <div class="container">
-            <div class="row g-3 align-items-center">
-                <div class="col-md-6">
-                    <h2 class="h6 mb-1 fw-bold">UrbanMotors</h2>
-                    <p class="mb-0 text-white-50">
-                        Gestão e catálogo de viaturas com uma experiência simples e profissional.
+            <div class="row g-4 align-items-start">
+                <div class="col-lg-5">
+                    <div class="footer-brand mb-2">
+                        UrbanMotors
+                    </div>
+
+                    <p class="footer-text mb-0">
+                        Gestão e catálogo de viaturas com uma experiência simples, profissional e transparente.
                     </p>
                 </div>
 
-                <div class="col-md-6 text-md-end">
-                    <small class="text-white-50">
-                        &copy; {{ date('Y') }} UrbanMotors. Todos os direitos reservados.
-                    </small>
+                <div class="col-sm-6 col-lg-3">
+                    <h3 class="footer-title">Links rápidos</h3>
+
+                    <ul class="footer-links">
+                        <li>
+                            <a href="{{ route('home') }}">Home</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('catalogo.index') }}">Catálogo</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('contactos.index') }}">Contactos</a>
+                        </li>
+                    </ul>
                 </div>
+
+                <div class="col-sm-6 col-lg-4">
+                    <h3 class="footer-title">Contactos</h3>
+
+                    <ul class="footer-links">
+                        <li>
+                            <span>Email:</span> geral@urbanmotors.pt
+                        </li>
+                        <li>
+                            <span>Telefone:</span> +351 912 345 678
+                        </li>
+                        <li>
+                            <span>Horário:</span> Seg. a Sex. · 09h00 - 18h00
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2026 UrbanMotors. Todos os direitos reservados.</span>
+                <span>Stand Automóveis</span>
             </div>
         </div>
     </footer>

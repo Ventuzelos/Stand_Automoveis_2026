@@ -31,71 +31,197 @@
         </div>
     </x-slot>
 
+
+
     <div class="container py-4">
-        <div class="row g-4 mb-4">
-            <div class="col-md-6 col-xl-3">
-                <div class="dashboard-card dashboard-stat-card dashboard-card-accent">
-                    <span class="dashboard-label">Total de Clientes</span>
-                    <h3>{{ $totalClientes }}</h3>
-                    <small class="dashboard-meta">Base de clientes registada</small>
-                </div>
+
+        <div class="dashboard-month-card mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">
+                    <i class="bi bi-graph-up-arrow text-success"></i>
+                    Desempenho do mês
+                </h5>
+
+                <span class="badge bg-success-subtle text-success">
+                    {{ now()->translatedFormat('F Y') }}
+                </span>
             </div>
 
-            <div class="col-md-6 col-xl-3">
-                <div class="dashboard-card dashboard-stat-card dashboard-card-accent">
-                    <span class="dashboard-label">Total de Viaturas</span>
-                    <h3>{{ $totalViaturas }}</h3>
-                    <small class="dashboard-meta">Stock global inserido</small>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="month-stat">
+                        <strong>{{ $vendasMes }}</strong>
+                        <span>Vendas</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-md-6 col-xl-3">
-                <div class="dashboard-card dashboard-stat-card dashboard-card-soft">
-                    <span class="dashboard-label">Viaturas Disponíveis</span>
-                    <h3>{{ $viaturasDisponiveis }}</h3>
-                    <small class="dashboard-meta">Atualmente em stock</small>
+                <div class="col-md-3">
+                    <div class="month-stat">
+                        <strong>{{ number_format($faturacaoMes, 2, ',', '.') }} €</strong>
+                        <span>Faturação</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-md-6 col-xl-3">
-                <div class="dashboard-card dashboard-stat-card dashboard-card-soft">
-                    <span class="dashboard-label">Viaturas Vendidas</span>
-                    <h3>{{ $viaturasVendidas }}</h3>
-                    <small class="dashboard-meta">Já associadas a vendas</small>
+                <div class="col-md-3">
+                    <div class="month-stat">
+                        <strong>{{ $clientesMes }}</strong>
+                        <span>Clientes novos</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="month-stat">
+                        <strong>{{ $viaturasMes }}</strong>
+                        <span>Viaturas novas</span>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="row g-4 mb-4">
-            <div class="col-md-6 col-xl-4">
-                <div class="dashboard-card dashboard-stat-card dashboard-card-accent">
-                    <span class="dashboard-label">Total de Vendas</span>
-                    <h3>{{ $totalVendas }}</h3>
-                    <small class="dashboard-meta">Operações concluídas</small>
+            <div class="col-md-6 col-xl">
+                <div class="dashboard-card dashboard-stat-card ">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <span class="dashboard-label">Melhor Venda</span>
+                            <h3>{{ number_format($melhorVenda ?? 0, 2, ',', '.') }} €</h3>
+                            <small class="dashboard-meta">Maior venda registada</small>
+                        </div>
+
+                        <div class="dashboard-stat-icon">
+                            <i class="bi bi-trophy"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl">
+                <div class="dashboard-card dashboard-stat-card">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <span class="dashboard-label">Total de Clientes</span>
+                            <h3>{{ $totalClientes }}</h3>
+                            <small class="dashboard-meta">Base de clientes registada</small>
+                        </div>
+
+                        <div class="dashboard-stat-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-6 col-xl-4">
-                <div class="dashboard-card dashboard-stat-card dashboard-card-accent">
-                    <span class="dashboard-label">Valor Total das Vendas</span>
-                    <h3>{{ number_format($valorTotalVendas, 2, ',', '.') }} €</h3>
-                    <small class="dashboard-meta">Faturação acumulada</small>
+            <div class="col-md-6 col-xl">
+                <div class="dashboard-card dashboard-stat-card">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <span class="dashboard-label">Total de Viaturas</span>
+                            <h3>{{ $totalViaturas }}</h3>
+                            <small class="dashboard-meta">Stock global inserido</small>
+                        </div>
+
+                        <div class="dashboard-stat-icon">
+                            <i class="bi bi-car-front"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-6 col-xl-2">
-                <div class="dashboard-card dashboard-stat-card dashboard-card-soft">
-                    <span class="dashboard-label">Preço Médio Viaturas</span>
-                    <h3>{{ number_format($precoMedioViaturas ?? 0, 2, ',', '.') }} €</h3>
-                    <small class="dashboard-meta">Valor médio do catálogo</small>
+            <div class="col-md-6 col-xl">
+                <div class="dashboard-card dashboard-stat-card">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <span class="dashboard-label">Viaturas Disponíveis</span>
+                            <h3>{{ $viaturasDisponiveis }}</h3>
+                            <small class="dashboard-meta">Atualmente em stock</small>
+                        </div>
+
+                        <div class="dashboard-stat-icon">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-6 col-xl-2">
-                <div class="dashboard-card dashboard-stat-card dashboard-card-soft">
-                    <span class="dashboard-label">Venda Média</span>
-                    <h3>{{ number_format($valorMedioVendas ?? 0, 2, ',', '.') }} €</h3>
-                    <small class="dashboard-meta">Ticket médio comercial</small>
+            <div class="col-md-6 col-xl">
+                <div class="dashboard-card dashboard-stat-card">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <span class="dashboard-label">Viaturas Vendidas</span>
+                            <h3>{{ $viaturasVendidas }}</h3>
+                            <small class="dashboard-meta">Já associadas a vendas</small>
+                        </div>
+
+                        <div class="dashboard-stat-icon">
+                            <i class="bi bi-tag"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-md-6 col-xl-3">
+                <div class="dashboard-card dashboard-stat-card">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <span class="dashboard-label">Total de Vendas</span>
+                            <h3>{{ $totalVendas }}</h3>
+                            <small class="dashboard-meta">Operações concluídas</small>
+                        </div>
+
+                        <div class="dashboard-stat-icon">
+                            <i class="bi bi-receipt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="dashboard-card dashboard-stat-card">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <span class="dashboard-label">Valor Total das Vendas</span>
+                            <h3>{{ number_format($valorTotalVendas, 2, ',', '.') }} €</h3>
+                            <small class="dashboard-meta">Faturação acumulada</small>
+                        </div>
+
+                        <div class="dashboard-stat-icon">
+                            <i class="bi bi-cash-coin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="dashboard-card dashboard-stat-card">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <span class="dashboard-label">Taxa de Venda</span>
+                            <h3>{{ $taxaVenda }}%</h3>
+                            <small class="dashboard-meta">Stock convertido em vendas</small>
+                        </div>
+
+                        <div class="dashboard-stat-icon">
+                            <i class="bi bi-percent"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+                <div class="dashboard-card dashboard-stat-card">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <span class="dashboard-label">Venda Média</span>
+                            <h3>{{ number_format($valorMedioVendas ?? 0, 2, ',', '.') }} €</h3>
+                            <small class="dashboard-meta">Ticket médio comercial</small>
+                        </div>
+
+                        <div class="dashboard-stat-icon">
+                            <i class="bi bi-graph-up"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -131,7 +257,8 @@
                                     @foreach ($ultimasVendas as $venda)
                                         <tr>
                                             <td>{{ $venda->cliente->nome ?? '—' }}</td>
-                                            <td>{{ $venda->viatura->marca ?? '' }} {{ $venda->viatura->modelo ?? '' }}</td>
+                                            <td>{{ $venda->viatura->marca ?? '' }} {{ $venda->viatura->modelo ?? '' }}
+                                            </td>
                                             <td>{{ \Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y') }}</td>
                                             <td>{{ number_format($venda->preco_venda, 2, ',', '.') }} €</td>
                                         </tr>
@@ -168,16 +295,25 @@
                                 <div class="list-group-item px-0 dashboard-list-item">
                                     <div class="d-flex justify-content-between align-items-start gap-3">
                                         <div>
-                                            <div class="fw-semibold">{{ $viatura->marca }} {{ $viatura->modelo }}</div>
-                                            <div class="text-muted small">{{ $viatura->matricula }} · {{ $viatura->ano }}</div>
+                                            <div class="fw-semibold">
+                                                {{ $viatura->marca }} {{ $viatura->modelo }}
+                                            </div>
+                                            <div class="text-muted small">
+                                                {{ $viatura->matricula }} · {{ $viatura->ano }}
+                                            </div>
                                         </div>
 
                                         <div class="text-end">
-                                            <div class="fw-semibold">{{ number_format($viatura->preco, 2, ',', '.') }} €</div>
+                                            <div class="fw-semibold">
+                                                {{ number_format($viatura->preco, 2, ',', '.') }} €
+                                            </div>
+
                                             @if ($viatura->vendido)
-                                                <span class="badge dashboard-badge dashboard-badge-muted">Vendida</span>
+                                                <span
+                                                    class="badge dashboard-badge dashboard-badge-muted">Vendida</span>
                                             @else
-                                                <span class="badge dashboard-badge dashboard-badge-accent">Disponível</span>
+                                                <span
+                                                    class="badge dashboard-badge dashboard-badge-accent">Disponível</span>
                                             @endif
                                         </div>
                                     </div>
@@ -191,6 +327,53 @@
                     @endif
                 </div>
             </div>
+        </div>
+
+        <div class="row g-4 mt-1">
+
+            <div class="col-lg-6">
+                <div class="dashboard-card h-100">
+                    <div class="dashboard-card-header">
+                        <h5 class="mb-1">🏆 Viaturas Mais Vendidas</h5>
+                        <p class="dashboard-card-subtitle mb-0">
+                            Ranking de desempenho comercial
+                        </p>
+                    </div>
+
+                    <div class="dashboard-card-body">
+
+                        @forelse($topViaturas as $index => $item)
+                            <div class="top-vehicle-row">
+
+                                <div class="top-vehicle-position">
+                                    #{{ $index + 1 }}
+                                </div>
+
+                                <div class="flex-grow-1">
+                                    <strong>
+                                        {{ $item->viatura->marca }}
+                                        {{ $item->viatura->modelo }}
+                                    </strong>
+                                </div>
+
+                                <div class="top-vehicle-sales">
+                                    {{ $item->total_vendas }}
+                                    vendas
+                                </div>
+
+                            </div>
+
+                        @empty
+
+                            <p class="text-muted mb-0">
+                                Ainda não existem vendas registadas.
+                            </p>
+                        @endforelse
+
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="row g-4 mb-4">
@@ -208,17 +391,39 @@
                             <span>Clientes registados</span>
                             <strong>{{ $totalClientes }}</strong>
                         </div>
+
                         <div class="dashboard-summary-item">
                             <span>Viaturas em stock</span>
                             <strong>{{ $viaturasDisponiveis }}</strong>
                         </div>
+
                         <div class="dashboard-summary-item">
                             <span>Viaturas vendidas</span>
                             <strong>{{ $viaturasVendidas }}</strong>
                         </div>
+
+                        <div class="dashboard-summary-item">
+                            <span>Taxa de venda</span>
+                            <strong>{{ $taxaVenda }}%</strong>
+                        </div>
+
                         <div class="dashboard-summary-item">
                             <span>Total de vendas</span>
                             <strong>{{ $totalVendas }}</strong>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-stock-progress mt-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="dashboard-label">Distribuição do stock</span>
+                            <strong>{{ $taxaVenda }}% vendido</strong>
+                        </div>
+
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-primary" style="width: {{ 100 - $taxaVenda }}%"></div>
+
+                            <div class="progress-bar"
+                                style="width: {{ $taxaVenda }}%; background-color: #f97316;"></div>
                         </div>
                     </div>
                 </div>
@@ -238,8 +443,14 @@
                             @can('gerir-clientes')
                                 <div class="col-sm-6">
                                     <a href="{{ route('clientes.create') }}" class="quick-action-card text-decoration-none">
-                                        <span class="quick-action-title">Registar Cliente</span>
-                                        <small class="text-muted">Adicionar novo cliente ao sistema</small>
+                                        <div class="quick-action-icon">
+                                            <i class="bi bi-person-plus"></i>
+                                        </div>
+
+                                        <div>
+                                            <span class="quick-action-title">Registar Cliente</span>
+                                            <small class="text-muted">Adicionar novo cliente ao sistema</small>
+                                        </div>
                                     </a>
                                 </div>
                             @endcan
@@ -247,8 +458,14 @@
                             @can('gerir-viaturas')
                                 <div class="col-sm-6">
                                     <a href="{{ route('viaturas.create') }}" class="quick-action-card text-decoration-none">
-                                        <span class="quick-action-title">Adicionar Viatura</span>
-                                        <small class="text-muted">Inserir nova viatura no stock</small>
+                                        <div class="quick-action-icon">
+                                            <i class="bi bi-car-front"></i>
+                                        </div>
+
+                                        <div>
+                                            <span class="quick-action-title">Adicionar Viatura</span>
+                                            <small class="text-muted">Inserir nova viatura no stock</small>
+                                        </div>
                                     </a>
                                 </div>
                             @endcan
@@ -256,8 +473,14 @@
                             @can('gerir-vendas')
                                 <div class="col-sm-6">
                                     <a href="{{ route('vendas.create') }}" class="quick-action-card text-decoration-none">
-                                        <span class="quick-action-title">Registar Venda</span>
-                                        <small class="text-muted">Criar nova venda associada</small>
+                                        <div class="quick-action-icon">
+                                            <i class="bi bi-receipt"></i>
+                                        </div>
+
+                                        <div>
+                                            <span class="quick-action-title">Registar Venda</span>
+                                            <small class="text-muted">Criar nova venda associada</small>
+                                        </div>
                                     </a>
                                 </div>
                             @endcan
@@ -265,8 +488,14 @@
                             @can('gerir-viaturas')
                                 <div class="col-sm-6">
                                     <a href="{{ route('viaturas.index') }}" class="quick-action-card text-decoration-none">
-                                        <span class="quick-action-title">Ver Stock</span>
-                                        <small class="text-muted">Consultar viaturas disponíveis</small>
+                                        <div class="quick-action-icon">
+                                            <i class="bi bi-box-seam"></i>
+                                        </div>
+
+                                        <div>
+                                            <span class="quick-action-title">Ver Stock</span>
+                                            <small class="text-muted">Consultar viaturas disponíveis</small>
+                                        </div>
                                     </a>
                                 </div>
                             @endcan
@@ -281,8 +510,8 @@
                 <div class="dashboard-panel h-100">
                     <div class="dashboard-panel-header">
                         <div>
-                            <h4 class="dashboard-panel-title">Vendas Recentes</h4>
-                            <p class="dashboard-panel-subtitle">Total por data de venda</p>
+                            <h4 class="dashboard-panel-title">Faturação Mensal</h4>
+                            <p class="dashboard-panel-subtitle">Evolução da faturação ao longo do ano</p>
                         </div>
                     </div>
 
@@ -310,6 +539,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         const salesCtx = document.getElementById('salesChart');
         const stockCtx = document.getElementById('stockChart');
@@ -319,12 +549,19 @@
             data: {
                 labels: {{ \Illuminate\Support\Js::from($chartLabels) }},
                 datasets: [{
-                    label: 'Valor das vendas (€)',
-                    data: {{ \Illuminate\Support\Js::from($chartValues) }},
-                    backgroundColor: '#2563eb',
-                    hoverBackgroundColor: '#1d4ed8',
-                    borderRadius: 10,
-                    maxBarThickness: 42
+                    label: 'Faturação (€)',
+                    data: @json($chartValues),
+                    backgroundColor: [
+                        '#2563eb',
+                        '#f97316',
+                        '#2563eb',
+                        '#f97316',
+                        '#2563eb',
+                        '#f97316',
+                        '#2563eb'
+                    ],
+                    borderRadius: 8,
+                    borderSkipped: false
                 }]
             },
             options: {
@@ -344,7 +581,7 @@
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            callback: function (value) {
+                            callback: function(value) {
                                 return value.toLocaleString('pt-PT') + ' €';
                             }
                         }
@@ -359,8 +596,8 @@
                 labels: ['Disponíveis', 'Vendidas'],
                 datasets: [{
                     data: [{{ $viaturasDisponiveis }}, {{ $viaturasVendidas }}],
-                    backgroundColor: ['#2563eb', '#94a3b8'],
-                    hoverBackgroundColor: ['#1d4ed8', '#64748b'],
+                    backgroundColor: ['#2563eb', '#f97316'],
+                    hoverBackgroundColor: ['#1d4ed8', '#ea580c'],
                     borderWidth: 0
                 }]
             },

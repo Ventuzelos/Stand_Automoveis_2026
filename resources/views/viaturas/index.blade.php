@@ -41,7 +41,8 @@
                             <select name="sort" class="search-unified-select">
                                 <option value="id" {{ request('sort', 'id') == 'id' ? 'selected' : '' }}>ID</option>
                                 <option value="marca" {{ request('sort') == 'marca' ? 'selected' : '' }}>Marca</option>
-                                <option value="modelo" {{ request('sort') == 'modelo' ? 'selected' : '' }}>Modelo</option>
+                                <option value="modelo" {{ request('sort') == 'modelo' ? 'selected' : '' }}>Modelo
+                                </option>
                                 <option value="ano" {{ request('sort') == 'ano' ? 'selected' : '' }}>Ano</option>
                                 <option value="preco" {{ request('sort') == 'preco' ? 'selected' : '' }}>Preço</option>
                             </select>
@@ -51,7 +52,8 @@
 
                         <div class="search-unified-group">
                             <select name="direction" class="search-unified-select">
-                                <option value="asc" {{ request('direction') == 'asc' ? 'selected' : '' }}>Ascendente</option>
+                                <option value="asc" {{ request('direction') == 'asc' ? 'selected' : '' }}>Ascendente
+                                </option>
                                 <option value="desc" {{ request('direction', 'desc') == 'desc' ? 'selected' : '' }}>
                                     Descendente
                                 </option>
@@ -94,11 +96,11 @@
                                     <tr>
                                         <td>{{ $viatura->id }}</td>
                                         <td>
-                                            @if ($viatura->imagem)
-                                                <img src="{{ asset('storage/' . $viatura->imagem) }}" alt="Imagem da viatura"
-                                                    width="72" height="48" class="img-thumbnail">
+                                            @if ($viatura->imagem_url)
+                                                <img src="{{ $viatura->imagem_url }}"
+                                                    alt="{{ $viatura->marca }} {{ $viatura->modelo }}">
                                             @else
-                                                <span class="text-muted">Sem imagem</span>
+                                                <div>Sem imagem</div>
                                             @endif
                                         </td>
                                         <td>{{ $viatura->marca }}</td>

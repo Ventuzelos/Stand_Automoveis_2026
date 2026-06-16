@@ -11,14 +11,11 @@
                 <div class="col-lg-5">
                     <div class="card shadow-sm h-100">
                         <div class="card-body">
-                            @if ($viatura->imagem)
-                                <img src="{{ asset('storage/' . $viatura->imagem) }}" alt="Imagem da viatura"
-                                    class="img-fluid rounded w-100">
+                            @if ($viatura->imagem_url)
+                                <img src="{{ $viatura->imagem_url }}" alt="{{ $viatura->marca }} {{ $viatura->modelo }}" class="card-img-top"
+    style="height: 250px; object-fit: cover;">
                             @else
-                                <div class="border rounded d-flex align-items-center justify-content-center text-muted"
-                                    style="height: 320px;">
-                                    Sem imagem
-                                </div>
+                                <div>Sem imagem</div>
                             @endif
                         </div>
                     </div>
@@ -105,7 +102,8 @@
                                 @endcan
 
                                 @can('eliminar-viaturas')
-                                    <form action="{{ route('viaturas.destroy', $viatura->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('viaturas.destroy', $viatura->id) }}" method="POST"
+                                        class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger"

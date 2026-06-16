@@ -140,14 +140,12 @@
                             @foreach ($viaturas as $viatura)
                                 <div class="col-md-6 col-xl-4">
                                     <div class="vehicle-card h-100 overflow-hidden">
-                                        @if ($viatura->imagem)
-                                            <img src="{{ asset('storage/' . $viatura->imagem) }}"
-                                                alt="{{ $viatura->marca }} {{ $viatura->modelo }}" class="vehicle-image">
+                                        @if ($viatura->imagem_url)
+                                            <img src="{{ $viatura->imagem_url }}"
+                                                alt="{{ $viatura->marca }} {{ $viatura->modelo }}" class="card-img-top"
+    style="height: 250px; object-fit: cover;">
                                         @else
-                                            <div
-                                                class="vehicle-image d-flex align-items-center justify-content-center text-muted">
-                                                Sem imagem
-                                            </div>
+                                            <div>Sem imagem</div>
                                         @endif
 
                                         <div class="p-4 d-flex flex-column h-100">
