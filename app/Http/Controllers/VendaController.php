@@ -7,6 +7,7 @@ use App\Models\Cliente;
 use App\Models\Viatura;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Support\ActivityLogger;
 
 class VendaController extends Controller
 {
@@ -16,21 +17,42 @@ class VendaController extends Controller
 
         $search = $request->input('search');
 
+        $totalVendas = Venda::count();
+
+        $faturacaoTotal = Venda::sum('preco_venda');
+
+        $vendaMedia = Venda::avg('preco_venda');
+
+        $melhorVenda = Venda::max('preco_venda');
+
         $vendas = Venda::with(['cliente', 'viatura'])
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->whereHas('cliente', function ($clienteQuery) use ($search) {
-                        $clienteQuery->where('nome', 'like', "%{$search}%");
+                        $clienteQuery->where('nome', 'like', "%{$search}%")
+                            ->orWhere('email', 'like', "%{$search}%")
+                            ->orWhere('telefone', 'like', "%{$search}%")
+                            ->orWhere('nif', 'like', "%{$search}%");
                     })->orWhereHas('viatura', function ($viaturaQuery) use ($search) {
-                        $viaturaQuery->where('matricula', 'like', "%{$search}%");
-                    });
+                        $viaturaQuery->where('marca', 'like', "%{$search}%")
+                            ->orWhere('modelo', 'like', "%{$search}%")
+                            ->orWhere('matricula', 'like', "%{$search}%");
+                    })->orWhere('preco_venda', 'like', "%{$search}%")
+                        ->orWhere('data_venda', 'like', "%{$search}%");
                 });
             })
             ->orderBy('id', 'desc')
             ->paginate(10)
             ->withQueryString();
 
-        return view('vendas.index', compact('vendas', 'search'));
+        return view('vendas.index', compact(
+            'vendas',
+            'search',
+            'totalVendas',
+            'faturacaoTotal',
+            'vendaMedia',
+            'melhorVenda'
+        ));
     }
 
     public function create()
@@ -62,12 +84,19 @@ class VendaController extends Controller
                 ->withErrors(['viatura_id' => 'Esta viatura já foi vendida.']);
         }
 
-        Venda::create([
+        $venda = Venda::create([
             'cliente_id' => $request->cliente_id,
             'viatura_id' => $request->viatura_id,
             'data_venda' => $request->data_venda,
             'preco_venda' => $request->preco_venda,
         ]);
+
+        ActivityLogger::log(
+            'criou',
+            'Venda',
+            $venda->id,
+            'Registou a venda #' . $venda->id
+        );
 
         $viatura->update([
             'vendido' => true,
@@ -130,6 +159,12 @@ class VendaController extends Controller
             'preco_venda' => $request->preco_venda,
             'observacoes' => $request->observacoes,
         ]);
+        ActivityLogger::log(
+            'editou',
+            'Venda',
+            $venda->id,
+            'Editou a venda #' . $venda->id
+        );
 
         return redirect()->route('vendas.index')->with('success', 'Venda atualizada com sucesso!');
     }
@@ -140,7 +175,16 @@ class VendaController extends Controller
 
         $viatura = Viatura::findOrFail($venda->viatura_id);
 
+        $vendaId = $venda->id;
+
         $venda->delete();
+
+        ActivityLogger::log(
+            'eliminou',
+            'Venda',
+            $vendaId,
+            'Eliminou a venda #' . $vendaId
+        );
 
         $viatura->update([
             'vendido' => false,

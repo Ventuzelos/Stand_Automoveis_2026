@@ -77,6 +77,38 @@
                 </div>
             </div>
         </div>
+        @if (count($alertas) > 0)
+            <div class="dashboard-panel mb-4">
+                <div class="dashboard-panel-header">
+                    <div>
+                        <h4 class="dashboard-panel-title">
+                            <i class="bi bi-bell me-2 text-warning"></i>
+                            Notificações Operacionais
+                        </h4>
+                        <p class="dashboard-panel-subtitle">
+                            Alertas automáticos com base no estado atual da aplicação.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    @foreach ($alertas as $alerta)
+                        <div class="col-md-4">
+                            <div class="system-alert system-alert-{{ $alerta['tipo'] }}">
+                                <div class="system-alert-icon">
+                                    <i class="bi {{ $alerta['icone'] }}"></i>
+                                </div>
+
+                                <div>
+                                    <strong>{{ $alerta['titulo'] }}</strong>
+                                    <p>{{ $alerta['mensagem'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
 
         <div class="row g-4 mb-4">
             <div class="col-md-6 col-xl">
@@ -329,12 +361,15 @@
             </div>
         </div>
 
-        <div class="row g-4 mt-1">
+        <div class="row g-4 mb-4">
 
-            <div class="col-lg-6">
+            <div class="col-12">
                 <div class="dashboard-card h-100">
                     <div class="dashboard-card-header">
-                        <h5 class="mb-1">🏆 Viaturas Mais Vendidas</h5>
+                        <h5 class="dashboard-panel-title mb-1">
+                            <i class="bi bi-trophy text-warning me-2"></i>
+                            Viaturas Mais Vendidas
+                        </h5>
                         <p class="dashboard-card-subtitle mb-0">
                             Ranking de desempenho comercial
                         </p>
@@ -551,15 +586,8 @@
                 datasets: [{
                     label: 'Faturação (€)',
                     data: @json($chartValues),
-                    backgroundColor: [
-                        '#2563eb',
-                        '#f97316',
-                        '#2563eb',
-                        '#f97316',
-                        '#2563eb',
-                        '#f97316',
-                        '#2563eb'
-                    ],
+                    backgroundColor: '#2563eb',
+                    hoverBackgroundColor: '#1d4ed8',
                     borderRadius: 8,
                     borderSkipped: false
                 }]

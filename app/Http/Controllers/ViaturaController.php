@@ -6,6 +6,7 @@ use App\Models\Viatura;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use App\Support\ActivityLogger;
 
 class ViaturaController extends Controller
 {
@@ -28,19 +29,42 @@ class ViaturaController extends Controller
             $direction = 'desc';
         }
 
+        $totalViaturas = Viatura::count();
+
+        $viaturasDisponiveis = Viatura::where('vendido', false)->count();
+
+        $viaturasVendidas = Viatura::where('vendido', true)->count();
+
+        $valorStock = Viatura::where('vendido', false)->sum('preco');
+
+        $precoMedio = Viatura::avg('preco');
+
         $viaturas = Viatura::query()
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('marca', 'like', "%{$search}%")
                         ->orWhere('modelo', 'like', "%{$search}%")
-                        ->orWhere('matricula', 'like', "%{$search}%");
+                        ->orWhere('matricula', 'like', "%{$search}%")
+                        ->orWhere('ano', 'like', "%{$search}%")
+                        ->orWhere('cor', 'like', "%{$search}%")
+                        ->orWhere('combustivel', 'like', "%{$search}%");
                 });
             })
             ->orderBy($sort, $direction)
             ->paginate(10)
             ->withQueryString();
 
-        return view('viaturas.index', compact('viaturas', 'search', 'sort', 'direction'));
+        return view('viaturas.index', compact(
+            'viaturas',
+            'search',
+            'sort',
+            'direction',
+            'totalViaturas',
+            'viaturasDisponiveis',
+            'viaturasVendidas',
+            'valorStock',
+            'precoMedio'
+        ));
     }
 
     public function create()
@@ -83,7 +107,14 @@ class ViaturaController extends Controller
             $dados['imagem'] = $request->file('imagem')->store('viaturas', 'public');
         }
 
-        Viatura::create($dados);
+        $viatura = Viatura::create($dados);
+
+        ActivityLogger::log(
+            'criou',
+            'Viatura',
+            $viatura->id,
+            'Criou a viatura ' . $viatura->marca . ' ' . $viatura->modelo
+        );
 
         return redirect()->route('viaturas.index')->with('success', 'Viatura criada com sucesso!');
     }
@@ -91,6 +122,8 @@ class ViaturaController extends Controller
     public function show(Viatura $viatura)
     {
         Gate::authorize('ver-viaturas');
+
+        $viatura->load(['venda.cliente']);
 
         return view('viaturas.show', compact('viatura'));
     }
@@ -140,6 +173,12 @@ class ViaturaController extends Controller
         }
 
         $viatura->update($dados);
+        ActivityLogger::log(
+            'editou',
+            'Viatura',
+            $viatura->id,
+            'Editou a viatura ' . $viatura->marca . ' ' . $viatura->modelo
+        );
 
         return redirect()->route('viaturas.index')->with('success', 'Viatura atualizada com sucesso!');
     }
@@ -152,7 +191,15 @@ class ViaturaController extends Controller
             Storage::disk('public')->delete($viatura->imagem);
         }
 
+        $descricaoViatura = $viatura->marca . ' ' . $viatura->modelo;
+        $viaturaId = $viatura->id;
         $viatura->delete();
+        ActivityLogger::log(
+            'eliminou',
+            'Viatura',
+            $viaturaId,
+            'Eliminou a viatura ' . $descricaoViatura
+        );
 
         return redirect()->route('viaturas.index')->with('success', 'Viatura eliminada com sucesso!');
     }

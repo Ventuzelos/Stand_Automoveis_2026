@@ -9,6 +9,7 @@ use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\UtilizadorController;
 use App\Http\Controllers\VendaController;
 use App\Http\Controllers\ViaturaController;
+use App\Http\Controllers\ExportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -22,6 +23,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('utilizadores', UtilizadorController::class)
         ->middleware('can:gerir-utilizadores');
+
+    //Export
+    Route::get('/export/clientes', [ExportController::class, 'clientes'])->name('export.clientes');
+    Route::get('/export/viaturas', [ExportController::class, 'viaturas'])->name('export.viaturas');
+    Route::get('/export/vendas', [ExportController::class, 'vendas'])->name('export.vendas');
 
     // Clientes
     Route::get('/clientes', [ClienteController::class, 'index'])

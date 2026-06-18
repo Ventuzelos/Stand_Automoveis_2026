@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Support\ActivityLogger;
 
 class ClienteController extends Controller
 {
@@ -14,19 +15,33 @@ class ClienteController extends Controller
 
         $search = $request->input('search');
 
+        $totalClientes = Cliente::count();
+
+        $clientesComCompras = Cliente::has('vendas')->count();
+
+        $clientesSemCompras = Cliente::doesntHave('vendas')->count();
+
         $clientes = Cliente::query()
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('nome', 'like', "%{$search}%")
                         ->orWhere('email', 'like', "%{$search}%")
-                        ->orWhere('telefone', 'like', "%{$search}%");
+                        ->orWhere('telefone', 'like', "%{$search}%")
+                        ->orWhere('nif', 'like', "%{$search}%")
+                        ->orWhere('morada', 'like', "%{$search}%");
                 });
             })
             ->orderBy('id', 'desc')
             ->paginate(10)
             ->withQueryString();
 
-        return view('clientes.index', compact('clientes', 'search'));
+        return view('clientes.index', compact(
+            'clientes',
+            'search',
+            'totalClientes',
+            'clientesComCompras',
+            'clientesSemCompras'
+        ));
     }
 
     public function create()
@@ -48,13 +63,19 @@ class ClienteController extends Controller
             'morada' => 'required|string|max:155',
         ]);
 
-        Cliente::create([
+        $cliente = Cliente::create([
             'nome' => $request->nome,
             'email' => $request->email,
             'telefone' => $request->telefone,
             'nif' => $request->nif,
             'morada' => $request->morada,
         ]);
+        ActivityLogger::log(
+            'criou',
+            'Cliente',
+            $cliente->id,
+            'Criou o cliente ' . $cliente->nome
+        );
 
         return redirect()->route('clientes.index')->with('success', 'Cliente criado com sucesso!');
     }
@@ -63,7 +84,22 @@ class ClienteController extends Controller
     {
         Gate::authorize('ver-clientes');
 
-        return view('clientes.show', compact('cliente'));
+        $cliente->load(['vendas.viatura']);
+
+        $totalCompras = $cliente->vendas->count();
+
+        $totalGasto = $cliente->vendas->sum('preco_venda');
+
+        $ultimaCompra = $cliente->vendas
+            ->sortByDesc('data_venda')
+            ->first();
+
+        return view('clientes.show', compact(
+            'cliente',
+            'totalCompras',
+            'totalGasto',
+            'ultimaCompra'
+        ));
     }
 
     public function edit(Cliente $cliente)
@@ -92,6 +128,12 @@ class ClienteController extends Controller
             'nif' => $request->nif,
             'morada' => $request->morada,
         ]);
+        ActivityLogger::log(
+            'editou',
+            'Cliente',
+            $cliente->id,
+            'Editou o cliente ' . $cliente->nome
+        );
 
         return redirect()->route('clientes.index')->with('success', 'Cliente atualizado com sucesso!');
     }
@@ -100,7 +142,15 @@ class ClienteController extends Controller
     {
         Gate::authorize('eliminar-clientes');
 
+        $nomeCliente = $cliente->nome;
+        $clienteId = $cliente->id;
         $cliente->delete();
+        ActivityLogger::log(
+            'eliminou',
+            'Cliente',
+            $clienteId,
+            'Eliminou o cliente ' . $nomeCliente
+        );
 
         return redirect()->route('clientes.index')->with('success', 'Cliente eliminado com sucesso!');
     }

@@ -86,6 +86,43 @@ class DashboardController extends Controller
             return (float) $item->total;
         });
 
+        $viaturasSemImagem = Viatura::whereNull('imagem')
+            ->orWhere('imagem', '')
+            ->count();
+
+        $clientesSemCompras = Cliente::doesntHave('vendas')->count();
+
+        $stockBaixo = $viaturasDisponiveis < 5;
+
+        $alertas = [];
+
+        if ($viaturasSemImagem > 0) {
+            $alertas[] = [
+                'tipo' => 'warning',
+                'icone' => 'bi-image',
+                'titulo' => 'Viaturas sem imagem',
+                'mensagem' => "{$viaturasSemImagem} viatura(s) sem fotografia associada.",
+            ];
+        }
+
+        if ($clientesSemCompras > 0) {
+            $alertas[] = [
+                'tipo' => 'info',
+                'icone' => 'bi-person-dash',
+                'titulo' => 'Clientes sem compras',
+                'mensagem' => "{$clientesSemCompras} cliente(s) ainda sem vendas registadas.",
+            ];
+        }
+
+        if ($stockBaixo) {
+            $alertas[] = [
+                'tipo' => 'danger',
+                'icone' => 'bi-exclamation-triangle',
+                'titulo' => 'Stock baixo',
+                'mensagem' => "Existem apenas {$viaturasDisponiveis} viatura(s) disponíveis.",
+            ];
+        }
+
         return view('dashboard', compact(
             'totalClientes',
             'totalViaturas',
@@ -106,6 +143,7 @@ class DashboardController extends Controller
             'clientesMes',
             'viaturasMes',
             'topViaturas',
+            'alertas',
         ));
     }
 }

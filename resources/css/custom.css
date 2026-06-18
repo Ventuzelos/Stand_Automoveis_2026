@@ -77,6 +77,40 @@ h5 {
 }
 
 /* ========================================
+   Breadcrumbs
+======================================== */
+
+.app-breadcrumb-wrapper {
+    margin-bottom: .75rem;
+    background: none !important;
+    border-bottom: none!important;
+}
+
+.app-breadcrumb {
+    font-size: .85rem;
+    color: #64748b;
+}
+
+.app-breadcrumb .breadcrumb-item a {
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.app-breadcrumb .breadcrumb-item a:hover {
+    color: #2563eb;
+}
+
+.app-breadcrumb .breadcrumb-item.active {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.app-breadcrumb .breadcrumb-item+.breadcrumb-item::before {
+    color: #94a3b8;
+}
+
+/* ========================================
    Layout / Cards
 ======================================== */
 .breadcrum_nav nav {
@@ -252,6 +286,64 @@ nav a:hover {
 /* ========================================
    Dashboard
 ======================================== */
+
+/*/alert ------*/
+.system-alert {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+
+    height: 100%;
+    padding: 1rem;
+
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+
+    background: #ffffff;
+}
+
+.system-alert-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+    font-size: 1.2rem;
+
+    flex-shrink: 0;
+}
+
+.system-alert strong {
+    display: block;
+    color: #0f172a;
+    margin-bottom: .25rem;
+}
+
+.system-alert p {
+    margin: 0;
+    color: #64748b;
+    font-size: .9rem;
+}
+
+.system-alert-warning .system-alert-icon {
+    background: #fff7ed;
+    color: #f97316;
+}
+
+.system-alert-info .system-alert-icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.system-alert-danger .system-alert-icon {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+
 .dashboard-kicker {
     display: inline-block;
     margin-bottom: 0.35rem;
@@ -323,7 +415,7 @@ nav a:hover {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: .85rem 0;
+    padding: .9rem 0;
     border-bottom: 1px solid #e5e7eb;
 }
 
@@ -335,17 +427,19 @@ nav a:hover {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background: #eff6ff;
-    color: #2563eb;
+    background: #fff7ed;
+    color: #f97316;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
+    font-weight: 800;
+    flex-shrink: 0;
 }
 
 .top-vehicle-sales {
-    font-weight: 700;
-    color: #f97316;
+    font-weight: 800;
+    color: #2563eb;
+    white-space: nowrap;
 }
 
 .quick-action-card {
@@ -382,7 +476,6 @@ nav a:hover {
 }
 
 .dashboard-panel {
-    height: 100%;
     background: #fff;
     border: 1px solid #e5e7eb;
     border-radius: 20px;
@@ -507,7 +600,7 @@ nav a:hover {
     border-radius: 18px;
     padding: 1.35rem 1.4rem;
     box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
-    height: 100%;
+
 }
 
 .dashboard-card-primary {
@@ -935,6 +1028,422 @@ textarea.form-control.is-invalid:focus {
 
 .table-actions .btn {
     white-space: nowrap;
+}
+
+/*/Show viatura ---*/
+.vehicle-profile-image {
+    height: 340px;
+    background: #f1f5f9;
+}
+
+.vehicle-profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vehicle-profile-placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+}
+
+.vehicle-price-box {
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.vehicle-price-box span {
+    display: block;
+    color: #64748b;
+    font-size: .85rem;
+    margin-bottom: .25rem;
+}
+
+.vehicle-price-box strong {
+    display: block;
+    color: #2563eb;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.vehicle-profile-spec {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: .9rem;
+    padding: 1rem;
+    height: 100%;
+}
+
+.vehicle-profile-spec span {
+    display: block;
+    color: #64748b;
+    font-size: .8rem;
+    margin-bottom: .25rem;
+}
+
+.vehicle-profile-spec strong {
+    display: block;
+    color: #0f172a;
+    font-weight: 800;
+}
+
+.vehicle-sale-card {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+
+/*/ Tabela Viaturas -----*/
+.vehicles-table thead th {
+    background: #1f2d3d;
+    color: #ffffff;
+    font-weight: 700;
+    border-bottom: 0;
+}
+
+.vehicles-table td,
+.vehicles-table th {
+    vertical-align: middle;
+}
+
+.vehicle-table-image {
+    width: 82px;
+    height: 58px;
+    border-radius: .75rem;
+    overflow: hidden;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #64748b;
+    font-size: .75rem;
+    text-align: center;
+}
+
+.vehicle-table-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vehicles-mobile-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.vehicle-mobile-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 .75rem 2rem rgba(15, 23, 42, .05);
+}
+
+.vehicle-mobile-image {
+    height: 190px;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+}
+
+.vehicle-mobile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vehicle-mobile-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .75rem;
+}
+
+.vehicle-mobile-info div {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: .75rem;
+    padding: .75rem;
+}
+
+.vehicle-mobile-info span {
+    display: block;
+    color: #64748b;
+    font-size: .75rem;
+    margin-bottom: .2rem;
+}
+
+.vehicle-mobile-info strong {
+    display: block;
+    color: #0f172a;
+    font-size: .9rem;
+}
+
+/*/Tabela Venda ------*/
+.sales-table thead th {
+    background: #1f2d3d;
+    color: #ffffff;
+    font-weight: 700;
+    border-bottom: 0;
+}
+
+.sales-table td,
+.sales-table th {
+    vertical-align: middle;
+}
+
+.sales-mobile-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.sale-mobile-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 .75rem 2rem rgba(15, 23, 42, .05);
+}
+
+.sale-mobile-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .75rem;
+}
+
+.sale-mobile-info div {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: .75rem;
+    padding: .75rem;
+}
+
+.sale-mobile-info span {
+    display: block;
+    color: #64748b;
+    font-size: .75rem;
+    margin-bottom: .2rem;
+}
+
+.sale-mobile-info strong {
+    display: block;
+    color: #0f172a;
+    font-size: .9rem;
+}
+
+/*/ Pag de venda ------*/
+.sale-avatar {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eff6ff;
+    color: #2563eb;
+
+    font-size: 2rem;
+}
+
+.sale-value-box {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.sale-value-box span {
+    display: block;
+    color: #9a3412;
+    font-size: .85rem;
+    margin-bottom: .25rem;
+}
+
+.sale-value-box strong {
+    display: block;
+    color: #f97316;
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.sale-info-card {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: .9rem;
+    padding: 1rem;
+    height: 100%;
+}
+
+.sale-info-card span {
+    display: block;
+    color: #64748b;
+    font-size: .8rem;
+    margin-bottom: .25rem;
+}
+
+.sale-info-card strong {
+    display: block;
+    color: #0f172a;
+    font-weight: 800;
+    word-break: break-word;
+}
+
+.sale-vehicle-image {
+    height: 100%;
+    min-height: 240px;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #f1f5f9;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #64748b;
+}
+
+.sale-vehicle-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sale-notes {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: .9rem;
+    padding: 1rem;
+    color: #475569;
+    line-height: 1.7;
+}
+
+
+/*/Tabela Cliente -----*/
+.client-table-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eff6ff;
+    color: #2563eb;
+
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.clients-table td,
+.clients-table th {
+    vertical-align: middle;
+}
+
+.clients-table thead th {
+    background: #1f2d3d;
+    color: #ffffff;
+    font-weight: 700;
+    border-bottom: 0;
+}
+
+.clients-table tbody tr {
+    transition: background .2s ease;
+}
+
+.clients-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.client-mobile-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 .75rem 2rem rgba(15, 23, 42, .05);
+}
+
+.client-mobile-info {
+    display: grid;
+    gap: .75rem;
+}
+
+.client-mobile-info div {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: .75rem;
+    padding: .75rem;
+}
+
+.client-mobile-info span {
+    display: block;
+    color: #64748b;
+    font-size: .75rem;
+    margin-bottom: .2rem;
+}
+
+.client-mobile-info strong {
+    display: block;
+    color: #0f172a;
+    font-size: .9rem;
+    word-break: break-word;
+}
+
+/* ========================================
+   Pag de cliente
+======================================== */
+
+.client-avatar {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eff6ff;
+    color: #2563eb;
+
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.client-contact-list {
+    display: grid;
+    gap: .85rem;
+}
+
+.client-contact-item {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: .85rem 1rem;
+}
+
+.client-contact-item span {
+    display: block;
+    color: #64748b;
+    font-size: .8rem;
+    margin-bottom: .25rem;
+}
+
+.client-contact-item strong {
+    color: #0f172a;
+    font-weight: 700;
+    word-break: break-word;
 }
 
 /* ========================================
@@ -1732,7 +2241,7 @@ nav[role="navigation"]::after {
 }
 
 /* ========================================
-   Veiculos Relacionados - Pagina de produto
+   Veiculos Relacionados - Pagina de produto - Cliente
 ======================================== */
 .related-vehicles {
     display: flex;
@@ -1851,6 +2360,7 @@ nav[role="navigation"]::after {
 
     .dashboard-panel {
         padding: 1.25rem;
+        margin-bottom: 20px;
     }
 
     .chart-container,
