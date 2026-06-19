@@ -30,6 +30,8 @@
     --text-main: #1f2937;
     --text-muted: #6b7280;
     --text-light: #94a3b8;
+    --navbar-height-public: 67px;
+    --navbar-height: 108px;
 
     /* --border: #dbe3ea;
     --border-strong: #cbd5e1; */
@@ -75,6 +77,12 @@ h5 {
 .x-page-header {
     margin-bottom: 1rem;
 }
+
+header {
+    position: relative;
+    z-index: 1060;
+}
+
 
 /* ========================================
    Breadcrumbs
@@ -151,6 +159,103 @@ nav a:hover {
 /* ========================================
    Navigation
 ======================================== */
+.dashboard-page-header {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+
+/*/Area Autenticada --------*/
+[x-cloak] {
+    display: none !important;
+}
+
+.app-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1060;
+    background: #fff;
+}
+
+.app-navbar-row {
+    position: relative;
+    z-index: 1061;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.app-mobile-toggle {
+    width: 42px;
+    height: 42px;
+    border: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 0;
+}
+
+.app-mobile-toggle span {
+    width: 28px;
+    height: 3px;
+    background: #111;
+    border-radius: 999px;
+    transition: all .3s ease;
+}
+
+.app-navbar.menu-open .app-mobile-toggle span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.app-navbar.menu-open .app-mobile-toggle span:nth-child(2) {
+    opacity: 0;
+}
+
+.app-navbar.menu-open .app-mobile-toggle span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/*/ Area Publica ------*/
+.custom-toggler {
+    border: 0;
+    width: 42px;
+    height: 42px;
+    position: relative;
+    z-index: 1051;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+}
+
+.custom-toggler:focus {
+    box-shadow: none;
+}
+
+.custom-toggler span {
+    display: block;
+    height: 3px;
+    width: 28px;
+    background: #111;
+    border-radius: 10px;
+    transition: 0.3s ease;
+}
+
+.custom-toggler.is-open span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.custom-toggler.is-open span:nth-child(2) {
+    opacity: 0;
+}
+
+.custom-toggler.is-open span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
 
 .app-navbar {
     background: #ffffff;
@@ -251,6 +356,20 @@ nav a:hover {
 
 .app-mobile-menu {
     padding-bottom: 1rem;
+    display: none;
+    animation: menuFade .25s ease;
+}
+
+@keyframes menuFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .app-mobile-links {
@@ -562,17 +681,40 @@ nav a:hover {
     min-height: 320px;
 }
 
+.app-page-header {
+    position: relative;
+    z-index: 1;
+    background: var(--bg-page);
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.app-page-header .container {
+    padding-top: 0 !important;
+}
+
 .dashboard-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 1rem;
     flex-wrap: wrap;
 }
 
-.dashboard-header-content {
-    min-width: 0;
+.dashboard-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .75rem;
+    flex-wrap: wrap;
+    margin-left: auto;
 }
+
+.dashboard-header-content {
+    min-width: 260px;
+}
+
+
 
 .dashboard-page-title {
     margin: 0 0 0.35rem;
@@ -588,12 +730,6 @@ nav a:hover {
     font-size: 0.98rem;
 }
 
-.dashboard-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-}
 
 .dashboard-card {
     background: #ffffff;
@@ -2399,6 +2535,123 @@ nav[role="navigation"]::after {
     color: #64748b !important;
 }
 
+/* =========================
+    Contactos
+========================= */
+.section-kicker {
+    display: inline-block;
+    margin-bottom: .75rem;
+    color: #2563eb;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.contact-hero {
+    padding: 4rem 0;
+    background:
+        radial-gradient(circle at top right, rgba(37, 99, 235, .12), transparent 32%),
+        linear-gradient(180deg, #f8fafc, #ffffff);
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.contact-hero-card {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.25rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1.25rem;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, .06);
+}
+
+.contact-hero-card i {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 1rem;
+    background: #fff7ed;
+    color: #f97316;
+    font-size: 1.4rem;
+}
+
+.contact-hero-card strong,
+.contact-hero-card span {
+    display: block;
+}
+
+.contact-hero-card span {
+    color: #64748b;
+    font-size: .9rem;
+}
+
+.contact-info-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.contact-info-item {
+    display: flex;
+    gap: .85rem;
+    align-items: flex-start;
+    padding: 1rem;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+}
+
+.contact-info-icon {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: .85rem;
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.contact-info-item span {
+    display: block;
+    color: #64748b;
+    font-size: .78rem;
+    margin-bottom: .15rem;
+}
+
+.contact-info-item strong {
+    color: #0f172a;
+}
+
+.contact-map {
+    overflow: hidden;
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+}
+
+.contact-mini-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 1rem;
+    border-radius: .9rem;
+    background: #fff7ed;
+    color: #f97316;
+    font-size: 1.2rem;
+}
+
+.contact-form-card .form-control {
+    min-height: 46px;
+}
+
+.contact-form-card textarea.form-control {
+    min-height: 160px;
+}
+
+
 /* ========================================
    Responsive
 ======================================== */
@@ -2469,8 +2722,122 @@ nav[role="navigation"]::after {
 
 @media (max-width: 1000px) {
 
+    /*/Area Autenticada --*/
+    .desktop-only {
+        display: none !important;
+    }
+
+    .mobile-only {
+        display: block;
+    }
+
+    .app-navbar {
+        position: sticky;
+        top: 0;
+        z-index: 2000;
+        background: #fff;
+    }
+
+    .app-navbar-row {
+        min-height: 96px;
+        position: relative;
+        z-index: 2002;
+    }
+
+    .app-mobile-toggle {
+        display: inline-flex;
+        position: relative;
+        z-index: 2003;
+    }
+
+    .app-mobile-menu {
+        position: fixed;
+        top: 104px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: calc(100vh - 104px);
+        background: #fff;
+        z-index: 2001;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 48px 24px 32px;
+        overflow-y: auto;
+    }
+
+    .app-mobile-menu.is-open {
+        display: flex;
+    }
+
+    .app-mobile-links {
+        width: 100%;
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        margin: 0;
+    }
+
+    .app-mobile-links .app-nav-link {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1.25rem;
+        padding: 0.85rem 1rem;
+    }
+
+    .app-mobile-user {
+        width: 100%;
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 18px;
+    }
+
+    .app-user-link-mobile,
+    .app-logout-btn-mobile {
+        width: 100%;
+        text-align: center;
+    }
+
+    /*/Area Publica ---*/
+    .ms-auto {
+        gap: 1rem;
+        font-size: 1.2rem;
+    }
+
+    #navbarPublica {
+        position: fixed;
+        inset: 0;
+        height: 100vh !important;
+        background: white;
+        z-index: 1050;
+        padding-top: 100px;
+        text-align: center;
+        top: var(--navbar-height-public);
+    }
+
+    #navbarPublica.collapsing {
+        height: 100vh !important;
+        transition: none;
+    }
+
+    #navbarPublica.collapse:not(.show) {
+        display: none;
+    }
+
+    #navbarPublica.collapse.show {
+        display: block;
+    }
+
     .container {
-        max-width: 900px!important;
+        max-width: 900px !important;
     }
 
     .desktop-only {
@@ -2507,6 +2874,8 @@ nav[role="navigation"]::after {
         padding: 1rem;
     }
 
+
+
     .dashboard-header {
         flex-direction: column;
         align-items: stretch;
@@ -2514,12 +2883,16 @@ nav[role="navigation"]::after {
 
     .dashboard-header-actions {
         width: 100%;
+        margin-left: 0;
+        justify-content: stretch;
     }
 
     .dashboard-header-actions .btn {
-        flex: 1 1 calc(50% - 0.5rem);
-        width: auto;
+        flex: 1 1 100%;
     }
+
+
+
 
     .dashboard-card {
         padding: 1.15rem 1.1rem;
@@ -2616,7 +2989,7 @@ nav[role="navigation"]::after {
 
 @media (max-width: 768px) {
     .container {
-        max-width: 768px!important;
+        max-width: 768px !important;
     }
 
     .related-slider-mobile {
@@ -2692,9 +3065,10 @@ nav[role="navigation"]::after {
         height: 240px;
     }
 
+
     /* =========================
-   Paginação - limpar fundo e border
-========================= */
+    Paginação - limpar fundo e border
+    ========================= */
 
     .pagination {
         --bs-pagination-bg: transparent;

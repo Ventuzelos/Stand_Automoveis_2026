@@ -29,9 +29,12 @@
                     </div>
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPublica"
-                    aria-controls="navbarPublica" aria-expanded="false" aria-label="Abrir navegação">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarPublica" aria-controls="navbarPublica" aria-expanded="false"
+                    aria-label="Abrir navegação">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarPublica">
@@ -123,7 +126,20 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    @stack('scripts')
+    <script>
+        const toggler = document.querySelector('.custom-toggler');
+        const navbar = document.querySelector('#navbarPublica');
+
+        navbar.addEventListener('show.bs.collapse', () => {
+            toggler.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        });
+
+        navbar.addEventListener('hide.bs.collapse', () => {
+            toggler.classList.remove('is-open');
+            document.body.style.overflow = '';
+        });
+    </script>
 </body>
 
 </html>

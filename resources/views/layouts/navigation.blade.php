@@ -1,17 +1,28 @@
-<nav class="app-navbar" x-data="{ open: false }">
+
+<nav class="app-navbar"
+    x-data="{ open: false }"
+    :class="{ 'menu-open': open }"
+    x-effect="document.body.style.overflow = open ? 'hidden' : ''">
+
     <div class="container">
         <div class="app-navbar-row">
+
+            <!-- Logo -->
             <div class="d-flex gap-2 align-items-center">
                 <a class="navbar-brand fw-bold" href="{{ route('home') }}">
                     <div class="d-flex gap-2 align-items-center">
-                        <img src="{{ asset('favicon.png') }}" alt="Logo" class="app-navbar-logo" width="45"
+                        <img src="{{ asset('favicon.png') }}"
+                            alt="Logo"
+                            class="app-navbar-logo"
+                            width="45"
                             height="45">
-                        UrbanMotors
 
+                        UrbanMotors
                     </div>
                 </a>
             </div>
 
+            <!-- Desktop Menu -->
             <div class="app-navbar-links desktop-only">
                 <a href="{{ route('dashboard') }}"
                     class="app-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -46,6 +57,7 @@
                 @endcan
             </div>
 
+            <!-- Desktop User -->
             <div class="app-navbar-user desktop-only">
                 <a href="{{ route('profile.edit') }}" class="app-user-link">
                     {{ Auth::user()->name }}
@@ -53,28 +65,31 @@
 
                 <form method="POST" action="{{ route('logout') }}" class="m-0">
                     @csrf
+
                     <button type="submit" class="app-logout-btn">
                         Sair
                     </button>
                 </form>
             </div>
 
-            <button type="button" class="app-mobile-toggle mobile-only" @click="open = !open"
-                :aria-expanded="open.toString()">
-                <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+            <!-- Mobile Toggle -->
+            <button type="button"
+                class="app-mobile-toggle mobile-only"
+                @click="open = !open"
+                :aria-expanded="open.toString()"
+                aria-label="Abrir menu">
 
-                <svg x-show="open" x-cloak xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
         </div>
 
-        <div class="app-mobile-menu mobile-only" x-show="open" x-transition x-cloak>
+        <!-- Mobile Menu -->
+        <div class="app-mobile-menu" :class="{ 'is-open': open }">
+
             <div class="app-mobile-links">
+
                 <a href="{{ route('dashboard') }}"
                     class="app-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     Dashboard
@@ -106,20 +121,27 @@
                         Utilizadores
                     </a>
                 @endcan
+
             </div>
 
             <div class="app-mobile-user">
-                <a href="{{ route('profile.edit') }}" class="app-user-link app-user-link-mobile">
+
+                <a href="{{ route('profile.edit') }}"
+                    class="app-user-link app-user-link-mobile">
                     {{ Auth::user()->name }}
                 </a>
 
                 <form method="POST" action="{{ route('logout') }}" class="m-0">
                     @csrf
-                    <button type="submit" class="app-logout-btn app-logout-btn-mobile">
+
+                    <button type="submit"
+                        class="app-logout-btn app-logout-btn-mobile">
                         Sair
                     </button>
                 </form>
+
             </div>
         </div>
     </div>
 </nav>
+
