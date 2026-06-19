@@ -1,5 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
+        <div>
+            <x-breadcrumbs :items="[['label' => 'Dashboard']]" />
+        </div>
         <div class="dashboard-header">
             <div class="dashboard-header-content">
                 <span class="dashboard-kicker">Painel principal</span>

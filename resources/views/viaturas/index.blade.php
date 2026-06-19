@@ -227,12 +227,14 @@
                                     <td class="text-center">
                                         <div class="table-actions">
                                             <a href="{{ route('viaturas.show', $viatura->id) }}"
+                                                data-bs-toggle="tooltip" title="Ver detalhes"
                                                 class="btn btn-action-view btn-sm">
                                                 Ver
                                             </a>
 
                                             @can('editar-viaturas')
                                                 <a href="{{ route('viaturas.edit', $viatura->id) }}"
+                                                    data-bs-toggle="tooltip" title="Editar registo"
                                                     class="btn btn-action-edit btn-sm">
                                                     Editar
                                                 </a>
@@ -245,6 +247,7 @@
                                                     @method('DELETE')
 
                                                     <button type="submit" class="btn btn-action-delete btn-sm"
+                                                        data-bs-toggle="tooltip" title="Eliminar registo"
                                                         onclick="return confirm('Tens a certeza que queres eliminar esta viatura?')">
                                                         Eliminar
                                                     </button>
@@ -318,14 +321,14 @@
                                 </div>
 
                                 <div class="d-flex gap-2 mt-3">
-                                    <a href="{{ route('viaturas.show', $viatura->id) }}"
-                                        class="btn btn-action-view btn-sm flex-fill">
+                                    <a href="{{ route('viaturas.show', $viatura->id) }}" data-bs-toggle="tooltip"
+                                        title="Ver detalhes" class="btn btn-action-view btn-sm flex-fill">
                                         Ver
                                     </a>
 
                                     @can('editar-viaturas')
-                                        <a href="{{ route('viaturas.edit', $viatura->id) }}"
-                                            class="btn btn-action-edit btn-sm flex-fill">
+                                        <a href="{{ route('viaturas.edit', $viatura->id) }}" data-bs-toggle="tooltip"
+                                            title="Editar registo" class="btn btn-action-edit btn-sm flex-fill">
                                             Editar
                                         </a>
                                     @endcan
@@ -337,7 +340,8 @@
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit" class="btn btn-action-delete btn-sm w-100"
+                                        <button type="submit" data-bs-toggle="tooltip" title="Eliminar registo"
+                                            class="btn btn-action-delete btn-sm w-100"
                                             onclick="return confirm('Tens a certeza que queres eliminar esta viatura?')">
                                             Eliminar
                                         </button>

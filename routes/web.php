@@ -10,6 +10,7 @@ use App\Http\Controllers\UtilizadorController;
 use App\Http\Controllers\VendaController;
 use App\Http\Controllers\ViaturaController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\AuditoriaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -21,13 +22,43 @@ Route::post('/contactos', [ContactoController::class, 'store'])->name('contactos
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('utilizadores', UtilizadorController::class)
+    // Utilizadores
+    Route::get('/utilizadores', [UtilizadorController::class, 'index'])
+        ->name('utilizadores.index')
+        ->middleware('can:gerir-utilizadores');
+
+    Route::get('/utilizadores/create', [UtilizadorController::class, 'create'])
+        ->name('utilizadores.create')
+        ->middleware('can:gerir-utilizadores');
+
+    Route::post('/utilizadores', [UtilizadorController::class, 'store'])
+        ->name('utilizadores.store')
+        ->middleware('can:gerir-utilizadores');
+
+    Route::get('/utilizadores/{utilizador}', [UtilizadorController::class, 'show'])
+        ->name('utilizadores.show')
+        ->middleware('can:gerir-utilizadores');
+
+    Route::get('/utilizadores/{utilizador}/edit', [UtilizadorController::class, 'edit'])
+        ->name('utilizadores.edit')
+        ->middleware('can:gerir-utilizadores');
+
+    Route::put('/utilizadores/{utilizador}', [UtilizadorController::class, 'update'])
+        ->name('utilizadores.update')
+        ->middleware('can:gerir-utilizadores');
+
+    Route::delete('/utilizadores/{utilizador}', [UtilizadorController::class, 'destroy'])
+        ->name('utilizadores.destroy')
         ->middleware('can:gerir-utilizadores');
 
     //Export
     Route::get('/export/clientes', [ExportController::class, 'clientes'])->name('export.clientes');
     Route::get('/export/viaturas', [ExportController::class, 'viaturas'])->name('export.viaturas');
     Route::get('/export/vendas', [ExportController::class, 'vendas'])->name('export.vendas');
+
+    //Auditoria
+    Route::get('/auditoria', [AuditoriaController::class, 'index'])
+        ->name('auditoria.index');
 
     // Clientes
     Route::get('/clientes', [ClienteController::class, 'index'])

@@ -94,11 +94,21 @@ class ClienteController extends Controller
             ->sortByDesc('data_venda')
             ->first();
 
+        $valorMedioCompra = $totalCompras > 0
+            ? $totalGasto / $totalCompras
+            : 0;
+
+        $viaturaMaisCara = $cliente->vendas
+            ->sortByDesc('preco_venda')
+            ->first();
+
         return view('clientes.show', compact(
             'cliente',
             'totalCompras',
             'totalGasto',
-            'ultimaCompra'
+            'ultimaCompra',
+            'valorMedioCompra',
+            'viaturaMaisCara'
         ));
     }
 

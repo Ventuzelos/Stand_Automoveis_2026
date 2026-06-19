@@ -166,12 +166,14 @@
                                     <td class="text-center">
                                         <div class="table-actions">
                                             <a href="{{ route('clientes.show', $cliente->id) }}"
+                                                data-bs-toggle="tooltip" title="Ver detalhes"
                                                 class="btn btn-action-view btn-sm">
                                                 Ver
                                             </a>
 
                                             @can('editar-clientes')
                                                 <a href="{{ route('clientes.edit', $cliente->id) }}"
+                                                    data-bs-toggle="tooltip" title="Editar registo"
                                                     class="btn btn-action-edit btn-sm">
                                                     Editar
                                                 </a>
@@ -184,6 +186,7 @@
                                                     @method('DELETE')
 
                                                     <button type="submit" class="btn btn-action-delete btn-sm"
+                                                        data-bs-toggle="tooltip" title="Eliminar registo"
                                                         onclick="return confirm('Tens a certeza que queres eliminar este cliente?')">
                                                         Eliminar
                                                     </button>
@@ -239,14 +242,14 @@
                             </div>
 
                             <div class="d-flex gap-2 mt-3">
-                                <a href="{{ route('clientes.show', $cliente->id) }}"
-                                    class="btn btn-action-view btn-sm flex-fill">
+                                <a href="{{ route('clientes.show', $cliente) }}" class="btn btn-action-view btn-sm"
+                                    data-bs-toggle="tooltip" title="Ver detalhes">
                                     Ver
                                 </a>
 
                                 @can('editar-clientes')
-                                    <a href="{{ route('clientes.edit', $cliente->id) }}"
-                                        class="btn btn-action-edit btn-sm flex-fill">
+                                    <a href="{{ route('clientes.edit', $cliente) }}" class="btn btn-action-edit btn-sm"
+                                        data-bs-toggle="tooltip" title="Editar registo">
                                         Editar
                                     </a>
                                 @endcan
@@ -258,7 +261,8 @@
                                     @csrf
                                     @method('DELETE')
 
-                                    <button type="submit" class="btn btn-action-delete btn-sm w-100"
+                                    <button type="submit" data-bs-toggle="tooltip" title="Eliminar registo"
+                                        class="btn btn-action-delete btn-sm w-100"
                                         onclick="return confirm('Tens a certeza que queres eliminar este cliente?')">
                                         Eliminar
                                     </button>

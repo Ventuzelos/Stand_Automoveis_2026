@@ -1,5 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
+        <div>
+            <x-breadcrumbs :items="[
+                ['label' => 'Dashboard', 'url' => route('dashboard')],
+                ['label' => 'Vendas', 'url' => route('vendas.index')],
+                ['label' => 'Venda #' . $venda->id],
+            ]" />
+        </div>
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
             <div>
                 <span class="dashboard-kicker">Registo comercial</span>
@@ -74,11 +81,8 @@
                             @csrf
                             @method('DELETE')
 
-                            <button
-                                type="submit"
-                                class="btn btn-outline-danger w-100"
-                                onclick="return confirm('Tens a certeza que queres eliminar esta venda?')"
-                            >
+                            <button type="submit" class="btn btn-outline-danger w-100"
+                                onclick="return confirm('Tens a certeza que queres eliminar esta venda?')">
                                 Eliminar Venda
                             </button>
                         </form>
@@ -120,7 +124,8 @@
                         </div>
 
                         @if ($venda->cliente)
-                            <a href="{{ route('clientes.show', $venda->cliente->id) }}" class="btn btn-sm btn-outline-secondary">
+                            <a href="{{ route('clientes.show', $venda->cliente->id) }}"
+                                class="btn btn-sm btn-outline-secondary">
                                 Ver cliente
                             </a>
                         @endif
@@ -171,7 +176,8 @@
                         </div>
 
                         @if ($venda->viatura)
-                            <a href="{{ route('viaturas.show', $venda->viatura->id) }}" class="btn btn-sm btn-outline-secondary">
+                            <a href="{{ route('viaturas.show', $venda->viatura->id) }}"
+                                class="btn btn-sm btn-outline-secondary">
                                 Ver viatura
                             </a>
                         @endif
@@ -182,10 +188,8 @@
                             <div class="col-md-5">
                                 <div class="sale-vehicle-image">
                                     @if ($venda->viatura->imagem_url)
-                                        <img
-                                            src="{{ $venda->viatura->imagem_url }}"
-                                            alt="{{ $venda->viatura->marca }} {{ $venda->viatura->modelo }}"
-                                        >
+                                        <img src="{{ $venda->viatura->imagem_url }}"
+                                            alt="{{ $venda->viatura->marca }} {{ $venda->viatura->modelo }}">
                                     @else
                                         <div>Sem imagem</div>
                                     @endif
@@ -225,7 +229,8 @@
                                     <div class="col-sm-6">
                                         <div class="sale-info-card">
                                             <span>Quilómetros</span>
-                                            <strong>{{ number_format($venda->viatura->quilometragem, 0, ',', '.') }} km</strong>
+                                            <strong>{{ number_format($venda->viatura->quilometragem, 0, ',', '.') }}
+                                                km</strong>
                                         </div>
                                     </div>
 

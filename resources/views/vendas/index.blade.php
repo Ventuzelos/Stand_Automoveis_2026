@@ -1,5 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
+        <div>
+            <x-breadcrumbs :items="[['label' => 'Dashboard', 'url' => route('dashboard')], ['label' => 'Vendas']]" />
+        </div>
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
             <div>
                 <span class="dashboard-kicker">Gestão comercial</span>
@@ -180,14 +183,14 @@
 
                                     <td class="text-center">
                                         <div class="table-actions">
-                                            <a href="{{ route('vendas.show', $venda->id) }}"
-                                                class="btn btn-action-view btn-sm">
+                                            <a href="{{ route('vendas.show', $venda->id) }}" data-bs-toggle="tooltip"
+                                                title="Ver detalhes" class="btn btn-action-view btn-sm">
                                                 Ver
                                             </a>
 
                                             @can('editar-vendas')
-                                                <a href="{{ route('vendas.edit', $venda->id) }}"
-                                                    class="btn btn-action-edit btn-sm">
+                                                <a href="{{ route('vendas.edit', $venda->id) }}" data-bs-toggle="tooltip"
+                                                    title="Editar registo" class="btn btn-action-edit btn-sm">
                                                     Editar
                                                 </a>
                                             @endcan
@@ -199,6 +202,7 @@
                                                     @method('DELETE')
 
                                                     <button type="submit" class="btn btn-action-delete btn-sm"
+                                                        data-bs-toggle="tooltip" title="Eliminar registo"
                                                         onclick="return confirm('Tens a certeza que queres eliminar esta venda?')">
                                                         Eliminar
                                                     </button>
@@ -262,14 +266,14 @@
                             @endif
 
                             <div class="d-flex gap-2 mt-3">
-                                <a href="{{ route('vendas.show', $venda->id) }}"
-                                    class="btn btn-action-view btn-sm flex-fill">
+                                <a href="{{ route('vendas.show', $venda->id) }}" data-bs-toggle="tooltip"
+                                    title="Ver detalhes" class="btn btn-action-view btn-sm flex-fill">
                                     Ver
                                 </a>
 
                                 @can('editar-vendas')
-                                    <a href="{{ route('vendas.edit', $venda->id) }}"
-                                        class="btn btn-action-edit btn-sm flex-fill">
+                                    <a href="{{ route('vendas.edit', $venda->id) }}" data-bs-toggle="tooltip"
+                                        title="Editar registo" class="btn btn-action-edit btn-sm flex-fill">
                                         Editar
                                     </a>
                                 @endcan
@@ -280,7 +284,8 @@
                                     @csrf
                                     @method('DELETE')
 
-                                    <button type="submit" class="btn btn-action-delete btn-sm w-100"
+                                    <button type="submit" data-bs-toggle="tooltip" title="Eliminar registo"
+                                        class="btn btn-action-delete btn-sm w-100"
                                         onclick="return confirm('Tens a certeza que queres eliminar esta venda?')">
                                         Eliminar
                                     </button>
