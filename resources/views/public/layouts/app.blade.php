@@ -57,11 +57,21 @@
                                 Contactos
                             </a>
                         </li>
-                        <li class="nav-item ms-lg-2">
-                            <a class="btn btn-primary" href="{{ route('login') }}">
-                                Entrar
-                            </a>
-                        </li>
+                        @guest
+                            <li class="nav-item ms-lg-2">
+                                <a class="btn btn-primary" href="{{ route('login') }}">
+                                    Entrar
+                                </a>
+                            </li>
+                        @endguest
+
+                        @auth
+                            <li class="nav-item ms-lg-2">
+                                <a class="btn btn-primary" href="{{ route('dashboard') }}">
+                                    Dashboard
+                                </a>
+                            </li>
+                        @endauth
                     </ul>
                 </div>
             </div>
