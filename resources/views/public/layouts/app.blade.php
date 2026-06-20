@@ -22,10 +22,8 @@
             <div class="container">
                 <a class="navbar-brand fw-bold" href="{{ route('home') }}">
                     <div class="d-flex gap-2 align-items-center">
-                        <img src="{{ asset('favicon.png') }}" alt="Logo" class="app-navbar-logo" width="45"
-                            height="45">
+                        <img src="{{ asset('favicon.png') }}" alt="Logo" class="app-navbar-logo" width="45" height="45">
                         UrbanMotors
-
                     </div>
                 </a>
 
@@ -45,29 +43,35 @@
                                 Home
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('catalogo.*') ? 'active fw-semibold' : '' }}"
                                 href="{{ route('catalogo.index') }}">
                                 Catálogo
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('sobre-nos') ? 'active fw-semibold' : '' }}"
                                 href="{{ route('sobre-nos') }}">
-                                Sobre Nós</a>
+                                Sobre Nós
+                            </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('faq') ? 'active fw-semibold' : '' }}"
                                 href="{{ route('faq') }}">
                                 FAQ
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('contactos.*') ? 'active fw-semibold' : '' }}"
                                 href="{{ route('contactos.index') }}">
                                 Contactos
                             </a>
                         </li>
+
                         @guest
                             <li class="nav-item ms-lg-2">
                                 <a class="btn btn-primary" href="{{ route('login') }}">
@@ -117,6 +121,12 @@
                             <a href="{{ route('catalogo.index') }}">Catálogo</a>
                         </li>
                         <li>
+                            <a href="{{ route('sobre-nos') }}">Sobre Nós</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('faq') }}">FAQ</a>
+                        </li>
+                        <li>
                             <a href="{{ route('contactos.index') }}">Contactos</a>
                         </li>
                     </ul>
@@ -146,19 +156,48 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const toggler = document.querySelector('.custom-toggler');
-        const navbar = document.querySelector('#navbarPublica');
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggler = document.querySelector('.custom-toggler');
+            const navbar = document.querySelector('#navbarPublica');
 
-        navbar.addEventListener('show.bs.collapse', () => {
-            toggler.classList.add('is-open');
-            document.body.style.overflow = 'hidden';
-        });
+            if (!toggler || !navbar || !window.bootstrap) {
+                return;
+            }
 
-        navbar.addEventListener('hide.bs.collapse', () => {
-            toggler.classList.remove('is-open');
-            document.body.style.overflow = '';
+            const collapse = window.bootstrap.Collapse.getOrCreateInstance(navbar, {
+                toggle: false
+            });
+
+            navbar.addEventListener('show.bs.collapse', function () {
+                toggler.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            });
+
+            navbar.addEventListener('hidden.bs.collapse', function () {
+                toggler.classList.remove('is-open');
+                document.body.style.overflow = '';
+            });
+
+            document.querySelectorAll('#navbarPublica a[href]').forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    const href = link.getAttribute('href');
+
+                    if (!href || href === '#') {
+                        return;
+                    }
+
+                    if (navbar.classList.contains('show')) {
+                        event.preventDefault();
+
+                        collapse.hide();
+
+                        setTimeout(function () {
+                            window.location.href = link.href;
+                        }, 120);
+                    }
+                });
+            });
         });
     </script>
 </body>
