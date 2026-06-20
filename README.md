@@ -1,59 +1,227 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚗 UrbanMotors
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema de gestão e catálogo de viaturas desenvolvido em Laravel para a gestão de um stand automóvel.
 
-## About Laravel
+O projeto inclui uma área interna (B2B) para administração do negócio e uma área pública (B2C) para consulta do catálogo de viaturas.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📋 Funcionalidades
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Área Administrativa (B2B)
 
-## Learning Laravel
+- Dashboard com indicadores de negócio
+- Gestão de Clientes (CRUD)
+- Gestão de Viaturas (CRUD)
+- Gestão de Vendas (CRUD)
+- Gestão de Utilizadores
+- Sistema de permissões por função
+- Auditoria de ações dos utilizadores
+- Exportação de dados para CSV
+- Pesquisa, filtros e paginação
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Área Pública (B2C)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Página inicial
+- Catálogo de viaturas
+- Página de detalhe da viatura
+- Página Sobre Nós
+- Página FAQ
+- Página de Contactos
+- Design responsivo para desktop, tablet e mobile
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🛠 Tecnologias Utilizadas
 
-### Premium Partners
+### Back-End
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- PHP 8
+- Laravel 12
+- Eloquent ORM
 
-## Contributing
+### Front-End
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Blade
+- HTML5
+- CSS3
+- Bootstrap 5
+- JavaScript
 
-## Code of Conduct
+### Base de Dados
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- MySQL
 
-## Security Vulnerabilities
+### Ferramentas
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Laravel Breeze
+- Vite
+- Git
+- GitHub
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📊 Principais Funcionalidades
+
+### Dashboard
+
+- Total de clientes
+- Total de viaturas
+- Total de vendas
+- Viaturas disponíveis e vendidas
+- Faturação total
+- Estatísticas mensais
+- Gráficos de apoio à gestão
+
+### Auditoria
+
+Registo automático de:
+
+- Criação de registos
+- Edição de registos
+- Eliminação de registos
+
+---
+
+## 🗄 Estrutura da Base de Dados
+
+Principais entidades:
+
+- Users
+- Clientes
+- Viaturas
+- Vendas
+- Activity Logs
+
+A estrutura da base de dados foi criada através de **Laravel Migrations**.
+
+---
+
+## 🌱 Seeders
+
+O projeto inclui seeders para gerar dados de demonstração:
+
+- Utilizador Administrador
+- Utilizador Vendedor
+- Clientes de exemplo
+- Viaturas de exemplo
+- Vendas de exemplo
+
+---
+
+## 🚀 Instalação
+
+### Clonar o repositório
+
+```bash
+git clone https://github.com/Ventuzelos/Stand_Automoveis_2026.git
+```
+
+### Entrar na pasta
+
+```bash
+cd Stand_Automoveis_2026
+```
+
+### Instalar dependências PHP
+
+```bash
+composer install
+```
+
+### Instalar dependências JavaScript
+
+```bash
+npm install
+```
+
+### Configurar ambiente
+
+```bash
+cp .env.example .env
+```
+
+Gerar chave:
+
+```bash
+php artisan key:generate
+```
+
+### Configurar base de dados
+
+Atualizar as credenciais no ficheiro `.env`.
+
+Executar:
+
+```bash
+php artisan migrate --seed
+```
+
+### Criar link para armazenamento
+
+```bash
+php artisan storage:link
+```
+
+### Compilar assets
+
+```bash
+npm run build
+```
+
+### Iniciar servidor
+
+```bash
+php artisan serve
+```
+
+---
+
+## 👥 Perfis de Utilizador
+
+### Administrador
+
+- Gestão total do sistema
+- Gestão de utilizadores
+- Auditoria
+- Exportação
+
+### Vendedor
+
+- Gestão de clientes
+- Gestão de viaturas
+- Gestão de vendas
+
+---
+
+## 📱 Responsividade
+
+A interface foi desenvolvida utilizando Bootstrap 5 e CSS personalizado, garantindo compatibilidade com:
+
+- Desktop
+- Tablet
+- Smartphone
+
+---
+
+## 🎓 Contexto Académico
+
+Projeto desenvolvido no âmbito da formação **Software Developer** do **CESAE Digital**, aplicando conhecimentos de:
+
+- Desenvolvimento Web
+- Bases de Dados
+- Laravel
+- PHP
+- Bootstrap
+- JavaScript
+- Git e GitHub
+
+---
+
+## 👩‍💻 Autora
+
+**Ângela Pereira**
+
+- GitHub: https://github.com/Ventuzelos
+- Portfolio: https://angelapereira.vercel.app
+- LinkedIn: https://www.linkedin.com/in/angelaventuzelospereira/
