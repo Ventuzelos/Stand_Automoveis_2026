@@ -4,19 +4,29 @@
 @section('metaDescription', 'Consulte o catálogo público de viaturas disponíveis na UrbanMotors.')
 
 @section('content')
-    <section class="py-5 bg-light border-bottom">
+    <section class="contact-hero">
         <div class="container">
-            <div class="row g-3 align-items-end">
+            <div class="row g-4 align-items-center">
                 <div class="col-lg-8">
-                    <h1 class="section-title mb-2">Catálogo de Viaturas</h1>
+                    <span class="section-kicker">Catálogo</span>
+
+                    <h1 class="section-title mb-3">
+                        Encontre a sua próxima viatura.
+                    </h1>
+
                     <p class="section-text mb-0">
-                        Explore as viaturas disponíveis e utilize os filtros para encontrar a opção certa.
+                        Explore o catálogo UrbanMotors e utilize os filtros para encontrar a viatura ideal.
                     </p>
                 </div>
-                <div class="col-lg-4 text-lg-end">
-                    <span class="badge bg-primary-subtle text-primary px-3 py-2">
-                        {{ $viaturas->total() }} resultado(s)
-                    </span>
+
+                <div class="col-lg-4">
+                    <div class="contact-hero-card">
+                        <i class="bi bi-car-front"></i>
+                        <div>
+                            <strong>{{ $viaturas->total() }} resultado(s)</strong>
+                            <span>Viaturas disponíveis para consulta</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -28,7 +38,15 @@
                 <div class="col-lg-3">
                     <div class="public-info-card position-sticky" style="top: 100px;">
                         <div class="card-body p-4">
-                            <h2 class="h5 fw-bold mb-3">Filtros</h2>
+                            <span class="section-kicker">Pesquisa</span>
+
+                            <h2 class="h5 fw-bold mb-2">
+                                Filtrar catálogo
+                            </h2>
+
+                            <p class="text-muted small mb-4">
+                                Ajuste os critérios para encontrar a viatura ideal.
+                            </p>
 
                             <form method="GET" action="{{ route('catalogo.index') }}">
                                 <div class="mb-3">
@@ -90,18 +108,24 @@
                                             {{ request('ordenar', 'recentes') == 'recentes' ? 'selected' : '' }}>
                                             Mais recentes
                                         </option>
+
                                         <option value="preco_asc"
                                             {{ request('ordenar') == 'preco_asc' ? 'selected' : '' }}>
                                             Preço mais baixo
                                         </option>
+
                                         <option value="preco_desc"
                                             {{ request('ordenar') == 'preco_desc' ? 'selected' : '' }}>
                                             Preço mais alto
                                         </option>
-                                        <option value="ano_desc" {{ request('ordenar') == 'ano_desc' ? 'selected' : '' }}>
+
+                                        <option value="ano_desc"
+                                            {{ request('ordenar') == 'ano_desc' ? 'selected' : '' }}>
                                             Ano mais recente
                                         </option>
-                                        <option value="ano_asc" {{ request('ordenar') == 'ano_asc' ? 'selected' : '' }}>
+
+                                        <option value="ano_asc"
+                                            {{ request('ordenar') == 'ano_asc' ? 'selected' : '' }}>
                                             Ano mais antigo
                                         </option>
                                     </select>
@@ -128,10 +152,9 @@
                             request()->filled('ano') ||
                             request()->filled('preco_min') ||
                             request()->filled('preco_max'))
-                        <div class="mb-4">
-                            <div class="alert alert-secondary">
-                                A visualizar resultados filtrados do catálogo.
-                            </div>
+                        <div class="alert alert-primary border-0 mb-4">
+                            <i class="bi bi-funnel me-2"></i>
+                            A visualizar resultados filtrados do catálogo.
                         </div>
                     @endif
 
@@ -142,10 +165,14 @@
                                     <div class="vehicle-card h-100 overflow-hidden">
                                         @if ($viatura->imagem_url)
                                             <img src="{{ $viatura->imagem_url }}"
-                                                alt="{{ $viatura->marca }} {{ $viatura->modelo }}" class="card-img-top"
-    style="height: 250px; object-fit: cover;">
+                                                alt="{{ $viatura->marca }} {{ $viatura->modelo }}"
+                                                class="card-img-top"
+                                                style="height: 250px; object-fit: cover;">
                                         @else
-                                            <div>Sem imagem</div>
+                                            <div class="d-flex align-items-center justify-content-center bg-light text-muted"
+                                                style="height: 250px;">
+                                                Sem imagem
+                                            </div>
                                         @endif
 
                                         <div class="p-4 d-flex flex-column h-100">
@@ -154,13 +181,16 @@
                                                     <h2 class="h5 fw-bold mb-1">
                                                         {{ $viatura->marca }} {{ $viatura->modelo }}
                                                     </h2>
+
                                                     <div class="vehicle-meta">
                                                         {{ $viatura->ano }} ·
                                                         {{ number_format($viatura->quilometragem, 0, ',', '.') }} km
                                                     </div>
                                                 </div>
 
-                                                <span class="badge bg-success">Disponível</span>
+                                                <span class="badge bg-success">
+                                                    Disponível
+                                                </span>
                                             </div>
 
                                             <div class="vehicle-meta mb-2">
@@ -192,9 +222,45 @@
                                 {{ $viaturas->links() }}
                             </div>
                         </div>
+
+                        <div class="contact-form-card mt-5">
+                            <div class="card-body p-4 p-lg-5 text-center">
+                                <span class="section-kicker">UrbanMotors</span>
+
+                                <h2 class="h3 fw-bold mb-3">
+                                    Não encontrou a viatura que procura?
+                                </h2>
+
+                                <p class="section-text mb-4" style="margin: auto">
+                                    Entre em contacto connosco e ajudaremos a encontrar a melhor solução para si.
+                                </p>
+
+                                <a href="{{ route('contactos.index') }}" class="btn btn-primary">
+                                    Pedir informações
+                                </a>
+                            </div>
+                        </div>
                     @else
-                        <div class="alert alert-secondary mb-0">
-                            Não foram encontradas viaturas com os filtros selecionados.
+                        <div class="contact-form-card">
+                            <div class="card-body p-4 p-lg-5 text-center">
+                                <span class="section-kicker">Sem resultados</span>
+
+                                <h2 class="h3 fw-bold mb-3">
+                                    Não foram encontradas viaturas.
+                                </h2>
+
+                                <p class="section-text mb-4" style="margin: auto">
+                                    Ajuste os filtros ou entre em contacto connosco para receber apoio personalizado.
+                                </p>
+
+                                <a href="{{ route('catalogo.index') }}" class="btn btn-outline-secondary me-2">
+                                    Limpar filtros
+                                </a>
+
+                                <a href="{{ route('contactos.index') }}" class="btn btn-primary">
+                                    Contactar
+                                </a>
+                            </div>
                         </div>
                     @endif
                 </div>

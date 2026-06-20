@@ -52,6 +52,17 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('sobre-nos') ? 'active fw-semibold' : '' }}"
+                                href="{{ route('sobre-nos') }}">
+                                Sobre Nós</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('faq') ? 'active fw-semibold' : '' }}"
+                                href="{{ route('faq') }}">
+                                FAQ
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('contactos.*') ? 'active fw-semibold' : '' }}"
                                 href="{{ route('contactos.index') }}">
                                 Contactos

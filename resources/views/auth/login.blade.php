@@ -66,14 +66,14 @@
                     </a>
                 @endif
 
-                @if (Route::has('register'))
+                {{-- @if (Route::has('register'))
                     <a
                         class="font-semibold text-indigo-600 hover:text-indigo-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         href="{{ route('register') }}"
                     >
                         Criar conta
                     </a>
-                @endif
+                @endif --}}
             </div>
         </div>
     </form>

@@ -18,6 +18,8 @@ Route::get('/catalogo', [CatalogoController::class, 'index'])->name('catalogo.in
 Route::get('/catalogo/{viatura}', [CatalogoController::class, 'show'])->name('catalogo.show');
 Route::get('/contactos', [ContactoController::class, 'index'])->name('contactos.index');
 Route::post('/contactos', [ContactoController::class, 'store'])->name('contactos.store');
+Route::view('/sobre-nos', 'public.sobre-nos')->name('sobre-nos');
+Route::view('/faq', 'public.faq')->name('faq');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
